@@ -4,14 +4,14 @@ import AuthStackParamList from "../navigation/Auth/AuthStackParamList";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 
-interface ButtonInput {
+interface ButtonProps {
     title: string
     screen: keyof AuthStackParamList
 }
 
 type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
 
-const DefaultButton: FC<ButtonInput> = ({title,screen}) => {
+const DefaultButton: FC<ButtonProps> = ({title,screen}) => {
     const navigation = useNavigation<AuthNavProp>();
 
     return (

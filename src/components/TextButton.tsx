@@ -4,14 +4,14 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native"
 import AuthStackParamList from "../navigation/Auth/AuthStackParamList";
 import{ NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-interface ButtonInput {
+interface TextButtonProps {
     title: string
     screen: keyof AuthStackParamList
 }
 
 type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
 
-const TextButton: FC<ButtonInput> = ({title,screen}) => {
+const TextButton: FC<TextButtonProps> = ({title,screen}) => {
     const navigation = useNavigation<AuthNavProp>();
 
     return (

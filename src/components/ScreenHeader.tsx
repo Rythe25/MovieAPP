@@ -5,13 +5,13 @@ import AuthStackParamList from "../navigation/Auth/AuthStackParamList";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-interface ScreenHeaderInput {
+interface ScreenHeaderProps {
   title: string | null;
 }
 
 type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
 
-const ScreenHeader: FC<ScreenHeaderInput> = ({ title }) => {
+const ScreenHeader: FC<ScreenHeaderProps> = ({ title }) => {
   const navigation = useNavigation<AuthNavProp>();
 
   return (
@@ -30,10 +30,10 @@ export default ScreenHeader;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    // borderWidth:1,
-    // borderColor: 'white',
+    borderWidth:1,
+    borderColor: 'white',
     flexDirection: "row",
-    flex: 0.1,
+    height:50,
     justifyContent: "center",
     alignItems: "flex-start",
   },

@@ -7,10 +7,15 @@ import { StyleSheet, Text, View } from 'react-native';
 // google #f3f8fb, apple #252836, facebook #4267b2 
 
 const globalStyles = StyleSheet.create({
-  container:{
+  rootContainer:{
       padding:20,
       flex:1,
       backgroundColor: '#171725'
+  },
+  container:{
+      padding:20,
+      flex:1,
+      backgroundColor: '#1f1d2b'
   },
   title:{
       color: '#ffffff',
