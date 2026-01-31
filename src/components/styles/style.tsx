@@ -13,6 +13,10 @@ const globalStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
+  font: {
+    fontSize: 18,
+    color: '#868692'
+  }
 });
 
 export default globalStyles;

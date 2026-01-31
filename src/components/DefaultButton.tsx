@@ -1,13 +1,21 @@
 import { FC } from "react"
 import { StyleSheet,TouchableOpacity, View, Text } from "react-native"
+import AuthStackParamList from "../navigation/Auth/AuthStackParamList";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
 
-interface ButtonText {
+interface ButtonInput {
     title: string
+    screen: keyof AuthStackParamList
 }
 
-const DefaultButton: FC<ButtonText> = ({title}) => {
+type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
+
+const DefaultButton: FC<ButtonInput> = ({title,screen}) => {
+    const navigation = useNavigation<AuthNavProp>();
+
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate(screen)}>
             <View style={styles.buttonStyle}>
                  <Text style={styles.textStyle}>{title}</Text>
             </View>

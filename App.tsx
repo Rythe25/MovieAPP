@@ -1,9 +1,10 @@
-import Navigation from './src/navigation/RootStackNavigator';
+import AuthStackNavigation from "./src/navigation/Auth/AuthStackNaivagtion";
+
 
 export default function App() {
 
   return (
-    <Navigation/>
+    <AuthStackNavigation/>
   );
 }
 
