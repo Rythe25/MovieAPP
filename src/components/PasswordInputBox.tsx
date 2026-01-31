@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { FC } from "react"
 import { StyleSheet, Text, TouchableOpacity, View, TextInput } from "react-native"
-import AuthStackParamList from "../navigation/Auth/AuthStackParamList";
-import{ NativeStackNavigationProp } from "@react-navigation/native-stack";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 interface PasswordInputProps {
   label: string;
@@ -17,12 +16,16 @@ const PasswordInputBox: FC<PasswordInputProps> = ({label,placeholder}) => {
         </View>
 
         <View style={styles.inputContainer}>
-<           TextInput 
-                style={styles.textInputstyle} 
-                placeholder={placeholder}
-                placeholderTextColor={'white'}/>
-
-            <View style={styles.hiddenContainer}>
+            <View style={styles.passwordContainer}>
+                <View style={styles.passwordInputContainer}>
+                    <TextInput 
+                        style={styles.textInputstyle} 
+                        placeholder={placeholder}
+                        placeholderTextColor={'white'}/>
+                </View>
+                <View style={styles.hiddenContainer}>
+                    <FontAwesome6 name="eye-low-vision" size={24} color="white" />
+                </View>
 
             </View>
         </View>
@@ -41,8 +44,8 @@ const styles = StyleSheet.create({
     borderRadius: 30
   },
   labelContainer: {
-    borderWidth:1,
-    borderColor:'white',
+    // borderWidth:1,
+    // borderColor:'white',
     position: 'relative',
     alignSelf: "flex-start",
     justifyContent: 'center',
@@ -57,18 +60,31 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   inputContainer: {
-    // flex: 1,
-    // flexDirection: 'row',
-  },
-  textInputstyle: {
     borderWidth:1,
-    borderColor:'white',
-    position: 'absolute',
-    width: 320,
+    // borderColor:'white',
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
     top: -10,
   },
+  passwordContainer:{
+    flexDirection: 'row',
+  },
+  passwordInputContainer:{
+    // borderWidth:1,
+    // borderColor:'white',
+    alignSelf: "flex-start",
+  },
+  textInputstyle: {
+    // borderWidth:1,
+    // borderColor:'white',
+    width:270
+  },
   hiddenContainer: {
-    borderWidth:1,
-    borderColor:'white',
+    // borderWidth:1,
+    // borderColor:'white',
+    width:50,
+    justifyContent:'center',
+    alignItems: 'center'
   }
 });

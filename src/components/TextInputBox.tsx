@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     borderRadius: 30
   },
   labelContainer: {
-    borderWidth:1,
-    borderColor:'white',
+    // borderWidth:1,
+    // borderColor:'white',
     position: 'relative',
     alignSelf: "flex-start",
     justifyContent: 'center',
@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textInputstyle: {
-    borderWidth:1,
-    borderColor:'white',
+    // borderWidth:1,
+    // borderColor:'white',
     position: 'absolute',
     width: 320,
     top: -10,

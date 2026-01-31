@@ -30,8 +30,8 @@ export default ScreenHeader;
 
 const styles = StyleSheet.create({
   headerContainer: {
-    borderWidth:1,
-    borderColor: 'white',
+    // borderWidth:1,
+    // borderColor: 'white',
     flexDirection: "row",
     height:50,
     justifyContent: "center",
