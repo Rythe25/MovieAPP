@@ -7,13 +7,22 @@ import { StyleSheet, Text, View } from 'react-native';
 // google #f3f8fb, apple #252836, facebook #4267b2 
 
 const globalStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#171725',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+  container:{
+      padding:20,
+      flex:1,
+      backgroundColor: '#171725'
   },
-  font: {
+  title:{
+      color: '#ffffff',
+      fontSize: 32,
+      fontWeight: '600'
+  },
+  subTitle:{
+      color: '#868692',
+      fontSize: 18,
+      fontWeight: '500'
+  },
+  lightFont:{
     fontSize: 18,
     color: '#868692'
   }

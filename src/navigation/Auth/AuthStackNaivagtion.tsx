@@ -9,7 +9,12 @@ import PasswordResetScreen from "../../screen/Auth/PasswordResetScreen";
 import VerificationScreen from "../../screen/Auth/Verification";
 
 const RootStack = createNativeStackNavigator<AuthStackParamList>({
-  screenOptions: { headerShown: true },
+  screenOptions: { 
+    headerShown: false, 
+    contentStyle: {
+      backgroundColor : '#171725'
+    }
+  },
   screens: {
     Root: RootScreen,
     SignUp: SignUpScreen, 
