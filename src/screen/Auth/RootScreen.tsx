@@ -14,7 +14,11 @@ const RootScreen = () => {
                 <View style={styles.headerContainer}>
                 {/* logo and title */}
                     <View style={styles.logoAndTitleContainer}>
-                        <Feather name="tv" size={100} color="#12cdd9" />
+                        <View style={styles.logoContainer}>
+                            <Feather name="tv" size={100} color="#12cdd9" />
+                            <Text style={styles.logoText}> CN </Text>
+                        </View>
+
                         <Text style={globalStyles.title}>CINEMAX</Text>
                     </View>
                     
@@ -73,9 +77,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    logoContainer: {
+        // borderWidth: 1,
+        // borderColor: 'white',
+        alignItems: 'center'
+    },
+    logoText: {
+        backgroundColor: '#12cdd9',
+        fontSize: 20,
+        textAlign: 'center',
+        borderRadius: 5,
+        fontWeight: '500',
+        top:-55
+    },
     logoAndTitleContainer: {
         alignItems: 'center',
-        gap: 20,
+        gap: 5,
         marginBottom: 10
     },
     subTitileContainer: {
