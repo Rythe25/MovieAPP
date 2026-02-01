@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
   textInputstyle: {
     // borderWidth:1,
     // borderColor:'white',
-    width:270
+    width:270,
+    color: 'white'
   },
   hiddenContainer: {
     // borderWidth:1,

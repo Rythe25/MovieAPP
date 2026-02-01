@@ -61,5 +61,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 320,
     top: -10,
+    color: 'white'
   }
 });

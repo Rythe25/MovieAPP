@@ -6,7 +6,7 @@ import SignUpScreen from "../../screen/Auth/SignUpScreen";
 import RootScreen from "../../screen/Auth/RootScreen";
 import CreateNewPasswordScreen from "../../screen/Auth/CreateNewPasswordScreen";
 import PasswordResetScreen from "../../screen/Auth/PasswordResetScreen";
-import VerificationScreen from "../../screen/Auth/Verification";
+import VerificationScreen from "../../screen/Auth/VerificationScreen";
 
 const RootStack = createNativeStackNavigator<AuthStackParamList>({
   screenOptions: { 
