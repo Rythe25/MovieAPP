@@ -5,6 +5,7 @@ type AuthStackParamList = {
     CreateNewPassword: undefined;
     PasswordReset: undefined;
     Verification: undefined;
+    PasswordVerification: undefined;
 };
 
 export default AuthStackParamList;

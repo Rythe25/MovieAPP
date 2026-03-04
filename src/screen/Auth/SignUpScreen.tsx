@@ -53,7 +53,7 @@ const SignUpScreen = () => {
                   </View>
               </View>
 
-              <DefaultButton title="Sign Up" screen="Login"/>
+              <DefaultButton title="Sign Up" screen="Verification"/>
           </View>
     </SafeAreaView>
   );

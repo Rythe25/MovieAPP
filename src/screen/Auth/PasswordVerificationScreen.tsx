@@ -7,7 +7,7 @@ import TextButton from "../../components/TextButton";
 import { useState } from "react";
 import TextInputBox from "../../components/TextInputBox";
 
-const VerificationScreen = () => {
+const PasswordVerificationScreen = () => {
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
 
   return (
@@ -16,7 +16,7 @@ const VerificationScreen = () => {
           {/* Top Section */}
           <View style={styles.sectionTopContainer}>
             <Text style={globalStyles.title}>
-                Verifying Your Account
+                Verifying Your Password
             </Text>
             <Text style={globalStyles.lightFont}>
                 We have just sent uou 6 digit code via your
@@ -63,7 +63,7 @@ const VerificationScreen = () => {
   );
 };
 
-export default VerificationScreen;
+export default PasswordVerificationScreen;
 
 const styles = StyleSheet.create({
     sectionTopContainer: {

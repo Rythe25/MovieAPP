@@ -33,7 +33,7 @@ const CreateNewPasswordScreen = () => {
           </View>
 
           <View style={styles.sectionBottomContainer}>
-              <DefaultButton title="Reset" screen="Verification"/>
+              <DefaultButton title="Reset" screen="PasswordVerification"/>
           </View>
     </SafeAreaView>
   );
