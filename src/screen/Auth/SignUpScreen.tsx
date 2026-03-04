@@ -27,7 +27,11 @@ const SignUpScreen = () => {
           {/* Middle Section */}
           <View style={styles.sectionMidContainer}>
             <View style={styles.inputContainer}>
-              <TextInputBox label="Full Name" placeholder="Tiffany" />
+              <TextInputBox label="First Name" placeholder="Tiffany" />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <TextInputBox label="Last Name" placeholder="Jersey" />
             </View>
 
             <View style={styles.inputContainer}>
@@ -72,9 +76,9 @@ const styles = StyleSheet.create({
     sectionMidContainer: {
       // borderWidth:1,
       // borderColor:'white',
-      flex:0.5,
+      // flex:0.8,
       flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
       gap:30
     },
@@ -85,6 +89,7 @@ const styles = StyleSheet.create({
     sectionBottomContainer: {
       // flex:1,
       // borderWidth:1,
+      flex:0.1,
       borderColor:'white',
       gap:40
     },

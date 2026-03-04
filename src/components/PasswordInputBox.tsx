@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   inputContainer: {
-    borderWidth:1,
+    // borderWidth:1,
     // borderColor:'white',
     position: 'relative',
     justifyContent: 'center',
