@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import AuthStackParamList from "../navigation/Auth/AuthStackParamList";
+import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     // borderWidth:1,
     // borderColor: 'white',
     flexDirection: "row",
-    height:50,
+    height: 50,
     justifyContent: "center",
     alignItems: "flex-start",
   },
