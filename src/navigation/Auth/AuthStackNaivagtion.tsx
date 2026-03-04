@@ -11,9 +11,11 @@ import VerificationScreen from "../../screen/Auth/VerificationScreen";
 const RootStack = createNativeStackNavigator<AuthStackParamList>({
   screenOptions: { 
     headerShown: false, 
+    animation: 'none',
     contentStyle: {
       backgroundColor : '#171725'
     }
+    
   },
   screens: {
     Root: RootScreen,

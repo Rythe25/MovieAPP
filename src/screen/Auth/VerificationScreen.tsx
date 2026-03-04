@@ -5,6 +5,7 @@ import ScreenHeader from "../../components/ScreenHeader";
 import DefaultButton from "../../components/DefaultButton";
 import TextButton from "../../components/TextButton";
 import { useState } from "react";
+import TextInputBox from "../../components/TextInputBox";
 
 const VerificationScreen = () => {
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
@@ -18,7 +19,7 @@ const VerificationScreen = () => {
                 Verifying Your Account
             </Text>
             <Text style={globalStyles.lightFont}>
-                We have just sent uou 4 digit code via your
+                We have just sent uou 6 digit code via your
             </Text>
             <Text style={globalStyles.lightFont}>
                 email <Text style={{color:'white'}}>example@gmail.com</Text>
@@ -27,24 +28,7 @@ const VerificationScreen = () => {
 
           {/* Middle Section */}
           <View style={styles.sectionMidContainer}>
-              {[0, 1, 2, 3].map((index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.inputContainer,
-                    focusedIndex === index && styles.inputFocused,
-                  ]}
-                >
-                  <TextInput
-                    style={styles.textInput}
-                    placeholderTextColor="white"
-                    keyboardType="number-pad"
-                    maxLength={1}
-                    onFocus={() => setFocusedIndex(index)}
-                    onBlur={() => setFocusedIndex(null)}
-                  />
-                </View>
-              ))}
+              <TextInputBox label="Verification Code" placeholder="xxxxxx" />
 
           </View>
 
