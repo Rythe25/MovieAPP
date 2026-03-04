@@ -28,8 +28,28 @@ const VerificationScreen = () => {
 
           {/* Middle Section */}
           <View style={styles.sectionMidContainer}>
-              <TextInputBox label="Verification Code" placeholder="xxxxxx" />
 
+            <TextInputBox label="Verification Code" placeholder="xxxxxx" />
+
+          {/* Single Digits Input */}
+              {/* {[0, 1, 2, 3].map((index) => (
+                <View
+                  key={index}
+                  style={[
+                    styles.inputContainer,
+                    focusedIndex === index && styles.inputFocused,
+                  ]}
+                >
+                  <TextInput
+                    style={styles.textInput}
+                    placeholderTextColor="white"
+                    keyboardType="number-pad"
+                    maxLength={1}
+                    onFocus={() => setFocusedIndex(index)}
+                    onBlur={() => setFocusedIndex(null)}
+                  />
+                </View>
+              ))} */}
           </View>
 
           <View style={styles.sectionBottomContainer}>
