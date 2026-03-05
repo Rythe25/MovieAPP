@@ -36,7 +36,7 @@ const LoginScreen = () => {
         <View style={styles.forgotPasswordContainer}>
           <TextButton title="Forgot Password?" screen="PasswordReset" />
         </View>
-        <DefaultButton title="Login" screen="Login" />
+        <DefaultButton title="Login" screen="HomeStack" />
       </View>
     </SafeAreaView>
   );

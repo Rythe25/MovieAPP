@@ -8,6 +8,7 @@ import CreateNewPasswordScreen from "../../screen/Auth/CreateNewPasswordScreen";
 import PasswordResetScreen from "../../screen/Auth/PasswordResetScreen";
 import VerificationScreen from "../../screen/Auth/VerificationScreen";
 import PasswordVerificationScreen from "../../screen/Auth/PasswordVerificationScreen";
+import BottomNavigation from "../MainStackNavigation";
 
 const RootStack = createNativeStackNavigator<AuthStackParamList>({
   screenOptions: { 
@@ -25,7 +26,8 @@ const RootStack = createNativeStackNavigator<AuthStackParamList>({
     CreateNewPassword : CreateNewPasswordScreen,
     PasswordReset : PasswordResetScreen,
     Verification : VerificationScreen,
-    PasswordVerification : PasswordVerificationScreen
+    PasswordVerification : PasswordVerificationScreen,
+    HomeStack : BottomNavigation
   },
 });
 

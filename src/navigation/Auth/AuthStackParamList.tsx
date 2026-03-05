@@ -6,6 +6,7 @@ type AuthStackParamList = {
     PasswordReset: undefined;
     Verification: undefined;
     PasswordVerification: undefined;
+    HomeStack: undefined;
 };
 
 export default AuthStackParamList;
