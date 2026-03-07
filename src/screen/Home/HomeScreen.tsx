@@ -76,7 +76,7 @@ export default function HomeScreen() {
           numColumns={3}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ padding: 20 }}
+          contentContainerStyle={{ padding: 10 }}
           renderItem={({ item }) => <MovieCard movie={item} />}
         />
       </View>

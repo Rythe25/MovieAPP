@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     alignItems:"center"
   },
   poster:{
-    width:100,
+    width:110,
     height:150,
     borderRadius:12
   }
