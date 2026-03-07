@@ -2,10 +2,11 @@ import { FC, useState } from "react";
 import { ScrollView, TouchableOpacity, Text, StyleSheet } from "react-native";
 
 interface HomeTabHeaderProps {
-  title?: string[];
+   title?: string[];
+   onTabChange:(index:number)=>void;
 }
 
-const HomeTabHeader: FC<HomeTabHeaderProps> = ({ title = [] }) => {
+const HomeTabHeader: FC<HomeTabHeaderProps> = ({ title = [], onTabChange }) => {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -18,7 +19,10 @@ const HomeTabHeader: FC<HomeTabHeaderProps> = ({ title = [] }) => {
       {title.map((item, index) => (
         <TouchableOpacity
           key={index}
-          onPress={() => setActiveIndex(index)}
+          onPress={() => {
+            setActiveIndex(index);
+            onTabChange(index);
+          }}
         >
           <Text
             style={[

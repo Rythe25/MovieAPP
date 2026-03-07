@@ -4,28 +4,29 @@ import { FC } from "react";
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  TextInput,
   Image,
 } from "react-native";
 
 interface TrendingCardProps {
-  number?: number;
-  title?: string;
-  image?: string;
+  number: number;
+  poster: string;
 }
 
-const TrendingCard: FC<TrendingCardProps> = ({ number, title, image }) => {
+const TrendingCard: FC<TrendingCardProps> = ({ number, poster}) => {
+  const posterURL =
+    "https://image.tmdb.org/t/p/w500" + poster;
+
   return (
     <View style={styles.container}>
-        <Image
-          style={styles.movieCard}
-          source={{
-            uri: "https://picsum.photos/200/300",
-          }}
-        />
-        <Text style={styles.trendingNumber}>{number}</Text>
+      <Image
+        style={styles.movieCard}
+        source={{ uri: posterURL }}
+      />
+
+      <Text style={styles.trendingNumber}>
+        {number}
+      </Text>
     </View>
   );
 };
