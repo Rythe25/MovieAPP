@@ -3,6 +3,7 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import globalStyles from '../../components/styles/style'
 import SearchBox from '../../components/HomeComponents/SearchBox'
+import TrendingCard from '../../components/HomeComponents/TrendingCard'
 
 export default function HomeScreen() {
   return (
@@ -15,7 +16,9 @@ export default function HomeScreen() {
 
       <View style={styles.midSection}>
           <ScrollView horizontal={true}>
-            
+            <TrendingCard number={1}></TrendingCard>
+            <TrendingCard number={2}></TrendingCard>
+            <TrendingCard number={3}></TrendingCard>
           </ScrollView>
       </View>
 
@@ -29,6 +32,6 @@ const styles = StyleSheet.create({
     gap: 20
   },
   midSection:{
-
+    marginTop: 20
   }
 })
