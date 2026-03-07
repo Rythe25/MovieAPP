@@ -20,6 +20,12 @@ const globalStyles = StyleSheet.create({
       flex:1,
       backgroundColor: '#1f1d2b'
   },
+  homeContainer:{
+      flex:1,
+      padding: 10,
+      paddingBottom: 0,
+      backgroundColor: '#1f1d2b',
+  },
   title:{
       color: '#ffffff',
       fontSize: 32,

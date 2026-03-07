@@ -5,6 +5,7 @@ import AuthStackNavigation from "./src/navigation/Auth/AuthStackNaivagtion";
 
 export default function App() {
 
+  // Run once at load time useEffect + []
   useEffect(() => {
     SystemUI.setBackgroundColorAsync("#171725");
   }, []);

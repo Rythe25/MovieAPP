@@ -25,7 +25,7 @@ const TrendingCard: FC<TrendingCardProps> = ({ number, title, image }) => {
             uri: "https://picsum.photos/200/300",
           }}
         />
-          <Text style={styles.trendingNumber}>{number}</Text>
+        <Text style={styles.trendingNumber}>{number}</Text>
     </View>
   );
 };
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 15
   },
   trendingNumber:{
+    // borderColor: 'white', borderWidth: 1,
     fontSize: 120,
     position: 'relative',
     top: -110,
