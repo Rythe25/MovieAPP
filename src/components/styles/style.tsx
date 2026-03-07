@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
+
+// Auth Screens
 // button and logo #12cdd9
 // background #171725
 // title #ffffff
 // text #868692
-
 // google #f3f8fb, apple #252836, facebook #4267b2 
+
+// Home Screens
 
 const globalStyles = StyleSheet.create({
   rootContainer:{
@@ -30,6 +33,11 @@ const globalStyles = StyleSheet.create({
   lightFont:{
     fontSize: 18,
     color: '#868692'
+  },
+  homeTitle:{
+    fontSize : 24,
+    color:'#ffffff',
+    fontWeight: 'bold'
   }
 });
 

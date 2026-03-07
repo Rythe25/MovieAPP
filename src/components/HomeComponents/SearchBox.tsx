@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { FontAwesome} from "@expo/vector-icons";
 import { FC } from "react";
 import {
   StyleSheet,
@@ -8,63 +9,60 @@ import {
   TextInput,
 } from "react-native";
 
-interface TextInputProps {
-  label: string;
+interface SearchBoxProps {
   placeholder?: string;
 }
 
-const TextInputBox: FC<TextInputProps> = ({ label, placeholder }) => {
+const SearchBox: FC<SearchBoxProps> = ({ placeholder }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.labelContainer}>
-        <Text style={styles.labelStyle}> {label} </Text>
-      </View>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInputstyle}
           placeholder={placeholder}
-          placeholderTextColor={"white"}
+          placeholderTextColor={"#8e8e8f"}
         />
       </View>
+
+      <View style={styles.iconContainer}>
+        <FontAwesome style={styles.searchIcon} name="search" size={16} color={"#8e8e8f"}/>
+      </View>
+
     </View>
   );
 };
 
-export default TextInputBox;
+export default SearchBox;
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 0.8,
-    borderColor: "#868692",
-    height: 70,
-    width: 360,
-    borderRadius: 30,
-  },
-  labelContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
-    position: "relative",
-    alignSelf: "flex-start",
-    justifyContent: "center",
+    // borderWidth: 1,
+    // borderColor: 'red',
+    flexDirection: 'row',
+    backgroundColor : "#373c44",
+    height: 50,
+    width: 370,
+    borderRadius: 20,
     alignItems: "center",
-    top: -10,
-    left: 20,
-  },
-  labelStyle: {
-    color: "white",
-    backgroundColor: "#1f1d2b",
-    fontSize: 16,
+    justifyContent: "center",
+    padding: 5
   },
   inputContainer: {
-    flex: 1,
-    alignItems: "center",
+    flex: 1.9,
+    paddingLeft: 10,
   },
   textInputstyle: {
     // borderWidth:1,
-    // borderColor:'white',
-    position: "absolute",
-    width: 320,
-    top: -10,
-    color: "white",
+    // borderColor:'red',
+    color: "#8e8e8f",
   },
+  iconContainer:{
+    flex:0.2,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  searchIcon: {
+    // borderWidth:1,
+    // borderColor:'red',
+  }
 });
