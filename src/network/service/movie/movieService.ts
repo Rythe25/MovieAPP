@@ -1,14 +1,4 @@
-import axios from "axios";
-
-const API_KEY = process.env.EXPO_PUBLIC_TMDB_API_KEY;
-
-// console.log("TMDB KEY:", API_KEY);
-const tmdb = axios.create({
-  baseURL: "https://api.themoviedb.org/3",
-  headers: {
-    Authorization: `Bearer ${API_KEY}`
-  }
-});
+import { tmdb } from "../../api/client";
 
 export const fetchTrendingMovies = async () => {
   const response = await tmdb.get("/trending/movie/day");
