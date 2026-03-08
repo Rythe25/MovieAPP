@@ -1,99 +1,121 @@
-import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import globalStyles from "../../components/styles/style";
-import SearchBox from "../../components/HomeComponents/SearchBox";
-import TrendingCard from "../../components/HomeComponents/TrendingCard";
-import HomeTabHeader from "../../components/HomeComponents/HomeTabHeader";
-import MovieCard, { Movie } from "../../components/HomeComponents/MovieCard";
-import { fetchMovies, fetchTrendingMovies } from "../../network/service/movie/movieService";
+import ScreenHeader from "../../components/AuthComponents/ScreenHeader";
+import TextInputBox from "../../components/AuthComponents/TextInputBox";
+import PasswordInputBox from "../../components/AuthComponents/PasswordInputBox";
+import DefaultButton from "../../components/AuthComponents/DefaultButton";
+import TextButton from "../../components/AuthComponents/TextButton";
+import { AuthService } from "../../network/service/auth/authService";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
 
-export default function HomeScreen() {
-  // Trending Movies
-  const [trending, setTrending] = useState<Movie[]>([]);
+const LoginScreen = ({ navigation }: any) => {
 
-  useEffect(() => {
-    loadTrendingMovies();
-  }, []);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const loadTrendingMovies = async () => {
+  const handleLogin = async () => {
     try {
-      const data = await fetchTrendingMovies();
-      setTrending(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+      setLoading(true);
 
-  // Movies Selection
-  const categories = ["now_playing", "upcoming", "top_rated", "popular"];
-  const categoryLabels = ["Now Playing", "Upcoming", "Top Rated", "Popular"];
-  const [activeTab, setActiveTab] = useState(0);
-  const [movies, setMovies] = useState<Movie[]>([]);
+      const data = await AuthService.login(email, password);
 
-  useEffect(() => {
-    loadMovies();
-  }, [activeTab]);
+      if (!data.is_verify) {
+        Alert.alert("Verification Required", "Please verify your account first.");
+        return;
+      }
 
-  const loadMovies = async () => {
-    try {
-      const data = await fetchMovies(categories[activeTab]);
-      setMovies(data);
-    } catch (err) {
-      console.log(err);
+      await AsyncStorage.setItem("token", data.token);
+
+      navigation.replace("HomeStack");
+
+    } catch (error: any) {
+
+      if (error.response?.status === 401) {
+        Alert.alert("Login Failed", "Invalid email or password");
+      } else {
+        Alert.alert("Error", "Something went wrong");
+      }
+
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <SafeAreaView style={globalStyles.homeContainer} edges={["top"]}>
-      <View style={styles.topSection}>
-        <Text style={globalStyles.homeTitle}>What do you want to watch?</Text>
-        <SearchBox placeholder="Search"></SearchBox>
+    <SafeAreaView style={globalStyles.container}>
+      <ScreenHeader title="Login" />
+
+      {/* Top Section */}
+      <View style={styles.sectionTopContainer}>
+        <Text style={globalStyles.title}>Hi, Tiffany</Text>
+        <Text style={globalStyles.subTitle}>Welcome back! please enter</Text>
+        <Text style={globalStyles.subTitle}>details.</Text>
       </View>
 
-      <View style={styles.midSection}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{ height: 290 }}
-        >
-          {trending.map((movie, index) => (
-            <TrendingCard
-              key={movie.id}
-              number={index + 1}
-              poster={movie.poster_path}
-            />
-          ))}
-        </ScrollView>
-      </View>
+      {/* Middle Section */}
+      <View style={styles.sectionMidContainer}>
 
-      <View style={styles.bottomSection}>
-        <HomeTabHeader title={categoryLabels} onTabChange={setActiveTab} />
-
-        <FlatList
-          data={movies}
-          numColumns={3}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ padding: 10 }}
-          renderItem={({ item }) => <MovieCard movie={item} />}
+        <TextInputBox
+          label="Email"
+          placeholder="email@example.com"
+          value={email}
+          onChangeText={setEmail}
         />
+
+        <PasswordInputBox
+          label="Password"
+          placeholder="**************"
+          value={password}
+          onChangeText={setPassword}
+        />
+
+      </View>
+
+      {/* Bottom Section */}
+      <View style={styles.sectionBottomContainer}>
+
+        <View style={styles.forgotPasswordContainer}>
+          <TextButton title="Forgot Password?" screen="PasswordReset" />
+        </View>
+
+        <DefaultButton
+          title={loading ? "Logging in..." : "Login"}
+          onPress={handleLogin}
+        />
+
       </View>
     </SafeAreaView>
   );
-}
+};
+
+export default LoginScreen;
 
 const styles = StyleSheet.create({
-  topSection: {
-    // borderColor: 'white', borderWidth: 1,
-    gap: 20,
+  sectionTopContainer: {
+    flex: 0.3,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  midSection: {
-    // borderColor: 'white', borderWidth: 1,
-    paddingTop: 10,
+
+  sectionMidContainer: {
+    flex: 0.3,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 30,
   },
-  bottomSection: {
-    // borderColor: 'white', borderWidth: 1,
-    flex: 1,
+
+  sectionBottomContainer: {
+    gap: 40,
+  },
+
+  forgotPasswordContainer: {
+    marginTop: 20,
+    flexDirection: "row-reverse",
   },
 });
