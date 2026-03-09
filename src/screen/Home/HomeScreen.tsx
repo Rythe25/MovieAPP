@@ -6,8 +6,9 @@ import globalStyles from "../../components/styles/style";
 import SearchBox from "../../components/HomeComponents/SearchBox";
 import TrendingCard from "../../components/HomeComponents/TrendingCard";
 import HomeTabHeader from "../../components/HomeComponents/HomeTabHeader";
-import { fetchMovies, fetchTrendingMovies } from "../../network/api/movie/home";
+
 import MovieCard, { Movie } from "../../components/HomeComponents/MovieCard";
+import { fetchMovies, fetchTrendingMovies } from "../../network/service/movie/movieService";
 
 export default function HomeScreen() {
   // Trending Movies

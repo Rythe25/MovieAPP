@@ -6,16 +6,17 @@ import { useNavigation } from "@react-navigation/native";
 
 interface ButtonProps {
   title: string;
-  screen: keyof AuthStackParamList;
+  // screen: keyof AuthStackParamList;
+  onPress: () => void;
 }
 
 type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
 
-const DefaultButton: FC<ButtonProps> = ({ title, screen }) => {
+const DefaultButton: FC<ButtonProps> = ({ title, onPress }) => {
   const navigation = useNavigation<AuthNavProp>();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate(screen)}>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.buttonStyle}>
         <Text style={styles.textStyle}>{title}</Text>
       </View>

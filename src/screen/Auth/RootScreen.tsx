@@ -6,8 +6,16 @@ import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import globalStyles from "../../components/styles/style";
 import DefaultButton from "../../components/AuthComponents/DefaultButton";
 import TextButton from "../../components/AuthComponents/TextButton";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
 
 const RootScreen = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+  const handleSignUp = () => {
+    navigation.navigate("SignUp");
+  };
+
   return (
     <SafeAreaView style={globalStyles.container}>
       <View style={styles.sectionTopContainer}>
@@ -31,7 +39,7 @@ const RootScreen = () => {
 
       <View style={styles.sectionMidContainer}>
         {/* signup button and login text */}
-        <DefaultButton title="Sign Up" screen="SignUp" />
+        <DefaultButton title="Sign Up" onPress={handleSignUp} />
 
         {/* signup text */}
         <View style={styles.loginTextContainer}>
