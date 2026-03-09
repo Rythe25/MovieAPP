@@ -13,19 +13,29 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 interface TextInputProps {
   label: string;
   placeholder?: string;
+  value: string;
+  onChangeText: (text: string) => void;
 }
 
-const TextInputBox: FC<TextInputProps> = ({ label, placeholder }) => {
+const TextInputBox: FC<TextInputProps> = ({
+  label,
+  placeholder,
+  value,
+  onChangeText
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.labelContainer}>
-        <Text style={styles.labelStyle}> {label} </Text>
+        <Text style={styles.labelStyle}>{label}</Text>
       </View>
+
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInputstyle}
           placeholder={placeholder}
           placeholderTextColor={"white"}
+          value={value}
+          onChangeText={onChangeText}
         />
       </View>
     </View>

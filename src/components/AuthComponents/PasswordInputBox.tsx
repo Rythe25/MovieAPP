@@ -6,33 +6,43 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 interface PasswordInputProps {
   label: string;
   placeholder?: string;
+  value: string;
+  onChangeText: (text: string) => void;
 }
 
-const PasswordInputBox: FC<PasswordInputProps> = ({label,placeholder}) => {
+const PasswordInputBox: FC<PasswordInputProps> = ({
+  label,
+  placeholder,
+  value,
+  onChangeText,
+}) => {
   return (
     <View style={styles.container}>
-        <View style={styles.labelContainer}>
-            <Text style={styles.labelStyle}> {label} </Text>
-        </View>
+      <View style={styles.labelContainer}>
+        <Text style={styles.labelStyle}>{label}</Text>
+      </View>
 
-        <View style={styles.inputContainer}>
-            <View style={styles.passwordContainer}>
-                <View style={styles.passwordInputContainer}>
-                    <TextInput 
-                        style={styles.textInputstyle} 
-                        placeholder={placeholder}
-                        placeholderTextColor={'white'}/>
-                </View>
-                <View style={styles.hiddenContainer}>
-                    <FontAwesome6 name="eye-low-vision" size={24} color="white" />
-                </View>
+      <View style={styles.inputContainer}>
+        <View style={styles.passwordContainer}>
+          <View style={styles.passwordInputContainer}>
+            <TextInput
+              style={styles.textInputstyle}
+              placeholder={placeholder}
+              placeholderTextColor="white"
+              secureTextEntry
+              value={value}
+              onChangeText={onChangeText}
+            />
+          </View>
 
-            </View>
+          <View style={styles.hiddenContainer}>
+            <FontAwesome6 name="eye-low-vision" size={24} color="white" />
+          </View>
         </View>
+      </View>
     </View>
   );
 };
-
 export default PasswordInputBox;
 
 const styles = StyleSheet.create({
