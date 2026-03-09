@@ -13,8 +13,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 interface TextInputProps {
   label: string;
   placeholder?: string;
-  value: string;
-  onChangeText: (text: string) => void;
+  value?: string;
+  onChangeText?: (text: string) => void;
 }
 
 const TextInputBox: FC<TextInputProps> = ({

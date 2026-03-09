@@ -20,14 +20,14 @@ const BottomNavigation = createBottomTabNavigator({
     },
   },
   screens: {
-    // Home: {
-    //   screen: HomeScreen,
-    //   options: {
-    //     tabBarIcon: ({ color, size }) => {
-    //       return <Entypo name="home" size={size} color={color} />;
-    //     },
-    //   },
-    // },
+    Home: {
+      screen: HomeScreen,
+      options: {
+        tabBarIcon: ({ color, size }) => {
+          return <Entypo name="home" size={size} color={color} />;
+        },
+      },
+    },
     // Search: {
     //   screen: SearchScreen,
     //   options: {

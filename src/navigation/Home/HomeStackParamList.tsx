@@ -2,7 +2,7 @@
 
 type HomeStackParamList = {
 //   Home: {deletedId?: string, updatedProduct?: ProductRes};
-  // Home: undefined;
+  Home: undefined;
   Profile: undefined;
   Search: undefined;
 };

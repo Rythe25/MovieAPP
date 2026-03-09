@@ -1,7 +1,7 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const API_KEY = process.env.TMDB_API_KEY;
+const API_KEY = process.env.TMDB_API_KEY
 
 export const auth = axios.create({
   baseURL: "https://laravel-auth-api-opal.vercel.app/api",

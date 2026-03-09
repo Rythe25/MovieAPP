@@ -6,8 +6,8 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 interface PasswordInputProps {
   label: string;
   placeholder?: string;
-  value: string;
-  onChangeText: (text: string) => void;
+  value?: string;
+  onChangeText?: (text: string) => void;
 }
 
 const PasswordInputBox: FC<PasswordInputProps> = ({

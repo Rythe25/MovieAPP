@@ -7,13 +7,13 @@ import { useNavigation } from "@react-navigation/native";
 interface ButtonProps {
   title: string;
   // screen: keyof AuthStackParamList;
-  onPress: () => void;
-  screen? : AuthStackParamList
+  onPress?: () => void;
+  screen?: keyof AuthStackParamList;
 }
 
 type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
 
-const DefaultButton: FC<ButtonProps> = ({ title, onPress }) => {
+const DefaultButton: FC<ButtonProps> = ({ title, onPress, screen }) => {
   const navigation = useNavigation<AuthNavProp>();
 
   return (

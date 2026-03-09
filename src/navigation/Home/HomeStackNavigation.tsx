@@ -7,7 +7,7 @@ import ProfileScreen from "../../screen/Profile/ProfileScreen";
 
 const HomeStackNavigation = createNativeStackNavigator<HomeStackParamList>({
   screens: {
-    // Home: HomeScreen,
+    Home: HomeScreen,
     Search: SearchScreen,
     Profile: ProfileScreen,
   },
