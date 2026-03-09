@@ -8,6 +8,7 @@ interface ButtonProps {
   title: string;
   // screen: keyof AuthStackParamList;
   onPress: () => void;
+  screen? : AuthStackParamList
 }
 
 type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;

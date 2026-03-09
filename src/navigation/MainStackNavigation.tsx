@@ -1,7 +1,7 @@
 import { createStaticNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeStackNavigation from "./HomeStackNavigation";
-import HomeStackParamList from "./HomeStackParamList";
+import HomeStackNavigation from "./Home/HomeStackNavigation";
+import HomeStackParamList from "./Home/HomeStackParamList";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
 import SearchScreen from "../screen/Home/SearchScreen";
 import HomeScreen from "../screen/Home/HomeScreen";
@@ -14,28 +14,28 @@ const BottomNavigation = createBottomTabNavigator({
     tabBarStyle: {
       height: 100,
       paddingTop: 20,
-      backgroundColor: "#171725",   // change background color
+      backgroundColor: "#171725", // change background color
       borderTopWidth: 2,
-      borderTopColor: "#0296e5"            // optional: remove top border
+      borderTopColor: "#0296e5", // optional: remove top border
     },
   },
   screens: {
-    Home: {
-      screen: HomeScreen,
-      options: {
-        tabBarIcon: ({ color, size }) => {
-          return <Entypo name="home" size={size} color={color} />;
-        },
-      },
-    },
-    Search: {
-      screen: SearchScreen,
-      options: {
-        tabBarIcon: ({ color, size }) => {
-          return <FontAwesome name="search" size={size} color={color} />;
-        },
-      },
-    },
+    // Home: {
+    //   screen: HomeScreen,
+    //   options: {
+    //     tabBarIcon: ({ color, size }) => {
+    //       return <Entypo name="home" size={size} color={color} />;
+    //     },
+    //   },
+    // },
+    // Search: {
+    //   screen: SearchScreen,
+    //   options: {
+    //     tabBarIcon: ({ color, size }) => {
+    //       return <FontAwesome name="search" size={size} color={color} />;
+    //     },
+    //   },
+    // },
     Profile: {
       screen: ProfileScreen,
       options: {
@@ -46,7 +46,6 @@ const BottomNavigation = createBottomTabNavigator({
     },
   },
 });
-
 
 declare global {
   namespace ReactNavigation {
