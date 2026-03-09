@@ -34,7 +34,10 @@ const LoginScreen = () => {
 
       await AsyncStorage.setItem("token", data.token);
 
-      navigation.replace("HomeStack");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "HomeStack" }],
+      });
 
     } catch (error: any) {
       const status = error.response?.status;

@@ -6,7 +6,6 @@ import { useNavigation } from "@react-navigation/native";
 
 interface ButtonProps {
   title: string;
-  // screen: keyof AuthStackParamList;
   onPress?: () => void;
   screen?: keyof AuthStackParamList;
 }

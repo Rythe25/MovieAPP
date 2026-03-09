@@ -1,4 +1,4 @@
-import { auth } from "../../api/client";
+import { auth } from "../../api/authClient";
 import { LoginResponse } from "../../api/type";
 
 export const AuthService = {

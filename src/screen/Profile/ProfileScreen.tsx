@@ -17,8 +17,14 @@ const ProfileScreen = () => {
     try {
       setLoading(true);
       await AuthService.logout();
+
       await AsyncStorage.removeItem("token");
-      navigation.replace("Login");
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Root" }],
+      });
+
     } catch (error) {
       console.log("Logout error:", error);
     } finally {
