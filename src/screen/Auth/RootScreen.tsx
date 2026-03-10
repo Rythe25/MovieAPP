@@ -16,6 +16,10 @@ const RootScreen = () => {
     navigation.navigate("SignUp");
   };
 
+  const navigateLogin = () => {
+    navigation.navigate("Login")
+  }
+
   return (
     <SafeAreaView style={globalStyles.container}>
       <View style={styles.sectionTopContainer}>
@@ -44,7 +48,7 @@ const RootScreen = () => {
         {/* signup text */}
         <View style={styles.loginTextContainer}>
           <Text style={globalStyles.lightFont}>
-            Already have an account? <TextButton title="Login" screen="Login" />
+            Already have an account? <TextButton title="Login" onPress={navigateLogin}/>
           </Text>
         </View>
       </View>

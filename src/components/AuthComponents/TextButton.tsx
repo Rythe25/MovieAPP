@@ -6,19 +6,20 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface TextButtonProps {
   title: string;
-  screen: keyof AuthStackParamList;
+  screen?: keyof AuthStackParamList;
+  onPress?: () => void;
 }
 
 type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
 
-const TextButton: FC<TextButtonProps> = ({ title, screen }) => {
+const TextButton: FC<TextButtonProps> = ({ title, screen, onPress }) => {
   const navigation = useNavigation<AuthNavProp>();
 
   return (
     // <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(screen)}>
     //  <Text style={styles.font}> {title}</Text>
     // </TouchableOpacity>
-    <Text style={styles.font} onPress={() => navigation.navigate(screen)}>
+    <Text style={styles.font} onPress={onPress}>
       {title}
     </Text>
   );

@@ -1,64 +1,115 @@
-import { StyleSheet, View, Text, TextInput } from "react-native";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import globalStyles from "../../components/styles/style";
 import ScreenHeader from "../../components/AuthComponents/ScreenHeader";
 import DefaultButton from "../../components/AuthComponents/DefaultButton";
 import TextButton from "../../components/AuthComponents/TextButton";
-import { useState } from "react";
 import TextInputBox from "../../components/AuthComponents/TextInputBox";
 
+import { AuthService } from "../../network/service/auth/authService";
+
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
+
 const VerificationScreen = () => {
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+
+  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+
+  const [code,setCode] = useState("");
+  const [loading,setLoading] = useState(false);
+
+  const handleVerify = async () => {
+
+    try{
+
+      if(code.length !== 6){
+        Alert.alert("Invalid Code","Please enter the 6 digit code");
+        return;
+      }
+
+      setLoading(true);
+
+      await AuthService.verifyCode(Number(code));
+
+      // optional: remove register token
+      await AsyncStorage.removeItem("token");
+
+      Alert.alert("Success","Account verified successfully");
+
+      navigation.reset({
+        index:0,
+        routes:[{name:"Login"}]
+      });
+
+    }catch(error:any){
+
+      const backendMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Verification failed";
+
+      Alert.alert("Verification Error",backendMessage);
+
+    }finally{
+      setLoading(false);
+    }
+
+  };
+
+  const handleResend = async () => {
+
+    try{
+      await AuthService.sendCode();
+      Alert.alert("Code Sent","A new verification code was sent");
+    }catch(error:any){
+      Alert.alert("Error","Unable to resend code");
+    }
+
+  };
 
   return (
     <SafeAreaView style={globalStyles.container}>
+
       <ScreenHeader title="" />
-      {/* Top Section */}
+
       <View style={styles.sectionTopContainer}>
         <Text style={globalStyles.title}>Verifying Your Account</Text>
         <Text style={globalStyles.lightFont}>
-          We have just sent uou 6 digit code via your
-        </Text>
-        <Text style={globalStyles.lightFont}>
-          email <Text style={{ color: "white" }}>example@gmail.com</Text>
+          We have sent a 6 digit code to your email
         </Text>
       </View>
 
-      {/* Middle Section */}
       <View style={styles.sectionMidContainer}>
-        <TextInputBox label="Verification Code" placeholder="XXXXXX" />
 
-        {/* Single Digits Input */}
-        {/* {[0, 1, 2, 3].map((index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.inputContainer,
-                    focusedIndex === index && styles.inputFocused,
-                  ]}
-                >
-                  <TextInput
-                    style={styles.textInput}
-                    placeholderTextColor="white"
-                    keyboardType="number-pad"
-                    maxLength={1}
-                    onFocus={() => setFocusedIndex(index)}
-                    onBlur={() => setFocusedIndex(null)}
-                  />
-                </View>
-              ))} */}
+        <TextInputBox
+          label="Verification Code"
+          placeholder="123456"
+          value={code}
+          onChangeText={setCode}
+        />
+
       </View>
 
       <View style={styles.sectionBottomContainer}>
-        <DefaultButton title="Continue" screen="Login" />
+
+        <DefaultButton
+          title={loading ? "Verifying..." : "Continue"}
+          onPress={handleVerify}
+        />
 
         <View style={styles.resendContainer}>
           <Text style={globalStyles.lightFont}>
-            Didn't recieve code?{" "}
-            <TextButton title="Resend" screen="Verification" />{" "}
+            Didn't receive code?{" "}
+            <TextButton title="Resend" onPress={handleResend}/>
           </Text>
         </View>
+
       </View>
+
     </SafeAreaView>
   );
 };
