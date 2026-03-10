@@ -55,7 +55,7 @@ const PasswordVerificationScreen = () => {
         <View style={styles.resendContainer}>
           <Text style={globalStyles.lightFont}>
             Didn't recieve code?{" "}
-            <TextButton title="Resend" screen="Verification" />{" "}
+            <TextButton title="Resend" />{" "}
           </Text>
         </View>
       </View>

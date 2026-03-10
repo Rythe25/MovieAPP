@@ -21,6 +21,10 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const navigatePasswordReset = () => {
+    navigation.navigate("PasswordReset")
+  }
+
   const handleLogin = async () => {
     try {
       setLoading(true);
@@ -89,7 +93,7 @@ const LoginScreen = () => {
       <View style={styles.sectionBottomContainer}>
 
         <View style={styles.forgotPasswordContainer}>
-          <TextButton title="Forgot Password?" screen="PasswordReset" />
+          <TextButton title="Forgot Password?" onPress={navigatePasswordReset} />
         </View>
 
         <DefaultButton

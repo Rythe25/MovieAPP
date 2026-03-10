@@ -6,13 +6,13 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface TextButtonProps {
   title: string;
-  screen?: keyof AuthStackParamList;
+  // screen?: keyof AuthStackParamList;
   onPress?: () => void;
 }
 
 type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
 
-const TextButton: FC<TextButtonProps> = ({ title, screen, onPress }) => {
+const TextButton: FC<TextButtonProps> = ({ title, onPress }) => {
   const navigation = useNavigation<AuthNavProp>();
 
   return (

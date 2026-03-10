@@ -33,7 +33,7 @@ const VerificationScreen = () => {
 
       setLoading(true);
 
-      await AuthService.verifyCode(Number(code));
+      await AuthService.verifyCode(code);
 
       // optional: remove register token
       await AsyncStorage.removeItem("token");
