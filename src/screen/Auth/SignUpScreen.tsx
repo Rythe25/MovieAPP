@@ -1,63 +1,114 @@
-import { StyleSheet, View, Text } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import globalStyles from "../../components/styles/style";
 import ScreenHeader from "../../components/AuthComponents/ScreenHeader";
 import TextInputBox from "../../components/AuthComponents/TextInputBox";
 import PasswordInputBox from "../../components/AuthComponents/PasswordInputBox";
 import DefaultButton from "../../components/AuthComponents/DefaultButton";
-import TextButton from "../../components/AuthComponents/TextButton";
+
+import { AuthService } from "../../network/service/auth/authService";
+
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
 
 const SignUpScreen = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const handleRegister = async () => {
+    try {
+      if (password !== confirmPassword) {
+        Alert.alert("Error", "Passwords do not match");
+        return;
+      }
+
+      setLoading(true);
+
+      const data = await AuthService.Register(
+        firstName,
+        lastName,
+        email.trim(),
+        password,
+        confirmPassword,
+      );
+
+      const token = data.token;
+      await AsyncStorage.setItem("token", token);
+      await AuthService.sendCode();
+
+      navigation.navigate("Verification");
+    } catch (error: any) {
+      const backendMessage = error.response?.data?.message || error.message || "Registration failed";
+
+      Alert.alert("Register Error", backendMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView style={globalStyles.container}>
       <ScreenHeader title="Sign Up" />
-      {/* Top Section */}
+
       <View style={styles.sectionTopContainer}>
         <Text style={globalStyles.title}>Let's get started</Text>
         <Text style={globalStyles.lightFont}>The latest movies and series</Text>
         <Text style={globalStyles.lightFont}>are here</Text>
       </View>
 
-      {/* Middle Section */}
       <View style={styles.sectionMidContainer}>
-        <View style={styles.inputContainer}>
-          <TextInputBox label="First Name" placeholder="Tiffany" />
-        </View>
+        <TextInputBox
+          label="First Name"
+          placeholder="John"
+          value={firstName}
+          onChangeText={setFirstName}
+        />
 
-        <View style={styles.inputContainer}>
-          <TextInputBox label="Last Name" placeholder="Jersey" />
-        </View>
+        <TextInputBox
+          label="Last Name"
+          placeholder="Doe"
+          value={lastName}
+          onChangeText={setLastName}
+        />
 
-        <View style={styles.inputContainer}>
-          <TextInputBox label="Email" placeholder="Tiffanyjearsey@gamil.com" />
-        </View>
+        <TextInputBox
+          label="Email"
+          placeholder="john@email.com"
+          value={email}
+          onChangeText={setEmail}
+        />
 
-        <View style={styles.inputContainer}>
-          <PasswordInputBox
-            label="Password"
-            placeholder="*********************"
-          />
-        </View>
+        <PasswordInputBox
+          label="Password"
+          placeholder="********"
+          value={password}
+          onChangeText={setPassword}
+        />
+
+        <PasswordInputBox
+          label="Confirm Password"
+          placeholder="********"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
       </View>
 
       <View style={styles.sectionBottomContainer}>
-        <View style={styles.policyContainer}>
-          <View>
-            <View style={styles.checkBox}></View>
-          </View>
-
-          <View>
-            <Text style={globalStyles.lightFont}>
-              I agree to the{" "}
-              <TextButton title="Terms and Services" screen="SignUp" />{" "}
-            </Text>
-            <Text style={globalStyles.lightFont}>
-              and <TextButton title="Privacy Policy" screen="SignUp" />
-            </Text>
-          </View>
-        </View>
-
-        <DefaultButton title="Sign Up" screen="Verification" />
+        <DefaultButton
+          title={loading ? "Creating Account..." : "Sign Up"}
+          onPress={handleRegister}
+        />
       </View>
     </SafeAreaView>
   );
@@ -67,29 +118,22 @@ export default SignUpScreen;
 
 const styles = StyleSheet.create({
   sectionTopContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
-    flex: 0.3,
+    // borderWidth:1, borderColor:'white',
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 30,
   },
   sectionMidContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
-    // flex:0.8,
+    // borderWidth:1, borderColor:'white',
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
     gap: 30,
-  },
-  inputContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
+    marginBottom: 30,
   },
   sectionBottomContainer: {
-    // flex:1,
     // borderWidth:1,
-    flex: 0.1,
+    flex: 1,
     borderColor: "white",
     gap: 40,
   },

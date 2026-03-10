@@ -14,9 +14,9 @@ const BottomNavigation = createBottomTabNavigator({
     tabBarStyle: {
       height: 100,
       paddingTop: 20,
-      backgroundColor: "#171725", // change background color
+      backgroundColor: "#171725", 
       borderTopWidth: 2,
-      borderTopColor: "#0296e5", // optional: remove top border
+      borderTopColor: "#0296e5",
     },
   },
   screens: {
