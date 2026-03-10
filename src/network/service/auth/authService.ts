@@ -1,22 +1,18 @@
 import { auth } from "../../api/authClient";
-import { LoginRequest, RegisterResponse, ResetPasswordRequest, VerifyCodeRequest, SendResetPasswordCodeRequest } from "../../api/type";
+import { 
+  RegisterReq,
+  RegisterRes,
+  VerifyCode,
+  LoginReq,
+  LoginRes, 
+  SendResetPassword,
+  ResetPassword
+} from "../../api/type";
 
 export const AuthService = {
-  Register: async (
-    first_name: string, 
-    last_name: string, 
-    email: string, 
-    password: string, 
-    password_confirmation: string
-  ): Promise<RegisterResponse> => {
+  Register: async (payload : RegisterReq): Promise<RegisterRes> => {
     try {
-      const response = await auth.post<RegisterResponse>("/register", {
-        first_name,
-        last_name,
-        email,
-        password,
-        password_confirmation,
-      });
+      const response = await auth.post<RegisterRes>("/register", payload);
       return response.data;
     } catch (error: any) {
       console.log("Error, registration: ", error.response?.data);
@@ -33,7 +29,7 @@ export const AuthService = {
     }
   },
 
-  verifyCode: async (code : string): Promise<VerifyCodeRequest> => {
+  verifyCode: async (code : string): Promise<VerifyCode> => {
     try {
       const response = await auth.post("/email/verify/check", {code});
       return response.data;
@@ -43,15 +39,9 @@ export const AuthService = {
     }
   },
 
-  login: async (
-    email: string, 
-    password: string
-  ): Promise<LoginRequest> => {
+  login: async (payload : LoginReq): Promise<LoginRes> => {
     try {
-      const response = await auth.post<LoginRequest>("/login", {
-        email,
-        password,
-      });
+      const response = await auth.post<LoginRes>("/login", payload);
       return response.data;
     } catch (error: any) {
       console.log("Error! login: ", error.response?.data);
@@ -59,9 +49,9 @@ export const AuthService = {
     }
   },
 
-  sendResetPasswordCode: async (email : string): Promise<SendResetPasswordCodeRequest> => {
+  sendResetPasswordCode: async (payload : SendResetPassword): Promise<SendResetPassword> => {
     try {
-      const response = await auth.post("/forgot-password/send-code", {email});
+      const response = await auth.post("/forgot-password/send-code", payload);
       return response.data;
     } catch (error: any) {
       console.log("Error! sendResetPasswordCode: ", error.response?.data);
@@ -69,19 +59,9 @@ export const AuthService = {
     }
   },
 
-  resetPassword: async (
-    email: string,
-    code: string,
-    password: string,
-    password_confirmation: string,
-  ): Promise<ResetPasswordRequest> => {
+  resetPassword: async (payload : ResetPassword): Promise<ResetPassword> => {
     try {
-      const response = await auth.post<ResetPasswordRequest>("/forgot-password/reset", {
-        email,
-        code,
-        password,
-        password_confirmation,
-      });
+      const response = await auth.post<ResetPassword>("/forgot-password/reset", payload);
       return response.data;
     } catch (error: any) {
       console.log("Error, resetPassword: ", error.response?.data);

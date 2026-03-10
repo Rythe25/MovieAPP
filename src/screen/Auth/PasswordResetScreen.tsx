@@ -22,9 +22,14 @@ const PasswordResetScreen = () => {
   const [passwordResetLoading, setpasswordResetLoading] = useState(false);
 
   const handleSendCode = async () => {
+      if (email === "") {
+        Alert.alert("Error", "Please enter your email address!");
+        return;
+      }
+
     try {
       setSendCodeLoading(true);
-      await AuthService.sendResetPasswordCode(email);
+      await AuthService.sendResetPasswordCode({email: email.trim()});
       Alert.alert("Success", "Verification code sent to your email");
     } catch (error: any) {
       Alert.alert(
@@ -46,7 +51,12 @@ const PasswordResetScreen = () => {
     try {
       setpasswordResetLoading(true);
 
-      await AuthService.resetPassword(email, code, password, confirmPassword);
+      await AuthService.resetPassword({
+        email : email,
+        code : code,
+        password : password,
+        password_confirmation : confirmPassword
+      });
 
       Alert.alert("Success", "Password reset successfully");
 
@@ -86,7 +96,7 @@ const PasswordResetScreen = () => {
       </View>
 
       <View style={styles.sendCodeContainer}>
-        <TextButton title={sendCodeLoading ? "Send Code" : "Send Code"} onPress={handleSendCode} />
+        <TextButton title={sendCodeLoading ? "Processing..." : "Send Code"} onPress={handleSendCode} />
       </View>
 
       <View style={styles.inputBoxContainer}>

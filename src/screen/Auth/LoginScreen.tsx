@@ -29,7 +29,10 @@ const LoginScreen = () => {
     try {
       setLoading(true);
 
-      const data = await AuthService.login(email.trim(), password);
+      const data = await AuthService.login({
+        email: email.trim(), 
+        password: password
+      });
 
       if (!data.is_verify) {
         Alert.alert("Verification Required", "Please verify your account first.");

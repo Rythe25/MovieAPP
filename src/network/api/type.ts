@@ -7,33 +7,40 @@ export interface User {
   profile_image?: string;
 }
 
-export interface RegisterRequest {
+export interface RegisterReq {
+  first_name: string, 
+  last_name: string, 
+  email: string, 
+  password: string, 
+  password_confirmation: string
+}
+
+export interface RegisterRes {
   token: string;
   user: User;
   password_confirmation: string;
 }
 
-export interface RegisterResponse {
-  token: string;
-  user: User;
-  password_confirmation: string;
-}
-
-export interface VerifyCodeRequest {
+export interface VerifyCode {
   code : number;
 }
 
-export interface SendResetPasswordCodeRequest {
+export interface SendResetPassword {
   email : string;
 }
 
-export interface LoginRequest {
+export interface LoginReq {
+  email : string;
+  password : string;
+}
+
+export interface LoginRes {
   token: string;
   user: User;
   is_verify: boolean;
 }
 
-export interface ResetPasswordRequest {
+export interface ResetPassword {
   email: string;
   code: string;
   password: string;

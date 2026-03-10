@@ -35,13 +35,13 @@ const SignUpScreen = () => {
 
       setLoading(true);
 
-      const data = await AuthService.Register(
-        firstName,
-        lastName,
-        email.trim(),
-        password,
-        confirmPassword,
-      );
+      const data = await AuthService.Register({
+        first_name: firstName,
+        last_name: lastName,
+        email: email.trim(),
+        password: password,
+        password_confirmation: confirmPassword,
+      });
 
       const token = data.token;
       await AsyncStorage.setItem("token", token);
