@@ -5,10 +5,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import globalStyles from "../../components/styles/style";
 import SearchBox from "../../components/HomeComponents/SearchBox";
 import TrendingCard from "../../components/HomeComponents/TrendingCard";
-import HomeTabHeader from "../../components/HomeComponents/HomeTabHeader";
+import HomeTabHeader from "../../components/HomeComponents/TabHeader";
 
 import MovieCard, { Movie } from "../../components/HomeComponents/MovieCard";
 import { fetchMovies, fetchTrendingMovies } from "../../network/service/movie/movieService";
+import TabHeader from "../../components/HomeComponents/TabHeader";
 
 export default function HomeScreen() {
   // Trending Movies
@@ -70,7 +71,7 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.bottomSection}>
-        <HomeTabHeader title={categoryLabels} onTabChange={setActiveTab} />
+        <TabHeader title={categoryLabels} onTabChange={setActiveTab} />
 
         <FlatList
           data={movies}

@@ -1,12 +1,12 @@
 import { FC, useState } from "react";
 import { ScrollView, TouchableOpacity, Text, StyleSheet } from "react-native";
 
-interface HomeTabHeaderProps {
+interface TabHeaderProps {
    title?: string[];
    onTabChange:(index:number)=>void;
 }
 
-const HomeTabHeader: FC<HomeTabHeaderProps> = ({ title = [], onTabChange }) => {
+const TabHeader: FC<TabHeaderProps> = ({ title = [], onTabChange }) => {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -38,7 +38,7 @@ const HomeTabHeader: FC<HomeTabHeaderProps> = ({ title = [], onTabChange }) => {
   );
 };
 
-export default HomeTabHeader;
+export default TabHeader;
 
 const styles = StyleSheet.create({
   container:{

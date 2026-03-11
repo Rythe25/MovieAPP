@@ -11,6 +11,7 @@ import VerificationScreen from "../../screen/Auth/VerificationScreen";
 import BottomNavigation from "../MainStackNavigation";
 import EditProfileScreen from "../../screen/Profile/EditProfileScreen";
 import ProfileScreen from "../../screen/Profile/ProfileScreen";
+import DetailScreen from "../../screen/Home/DetailScreen";
 
 const RootStack = createNativeStackNavigator<AuthStackParamList>({
   screenOptions: { 
@@ -22,16 +23,17 @@ const RootStack = createNativeStackNavigator<AuthStackParamList>({
     
   },
   screens: {
-    Root: RootScreen,
-    SignUp: SignUpScreen, 
-    Login: LoginScreen,
-    CreateNewPassword : CreateNewPasswordScreen,
-    PasswordReset : PasswordResetScreen,
-    Verification : VerificationScreen,
+    // Root: RootScreen,
+    // SignUp: SignUpScreen, 
+    // Login: LoginScreen,
+    // CreateNewPassword : CreateNewPasswordScreen,
+    // PasswordReset : PasswordResetScreen,
+    // Verification : VerificationScreen,
     // PasswordVerification : PasswordVerificationScreen,
-    Profile: ProfileScreen,
-    EditProfile: EditProfileScreen,
-    HomeStack : BottomNavigation,
+    // HomeStack : BottomNavigation,
+    // Profile: ProfileScreen,
+    // EditProfile: EditProfileScreen,
+    Detail: DetailScreen,
   },
 });
 

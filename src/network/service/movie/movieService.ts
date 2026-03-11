@@ -13,3 +13,19 @@ export const fetchMovies = async (category: string) => {
   // console.log(tmdb.defaults.headers);
   return response.data.results;
 };
+
+export const fetchMovieDetail = async (movieId: number) => {
+  const response = await tmdb.get(`/movie/${movieId}`);
+  return response.data;
+};
+
+export const fetchMovieReviews = async (movieId: number) => {
+  const response = await tmdb.get(`/movie/${movieId}/reviews`);
+  return response.data.results;
+};
+
+export const fetchMovieCast = async (movieId: number) => {
+  const response = await tmdb.get(`/movie/${movieId}/credits`);
+  return response.data.cast;
+};
+

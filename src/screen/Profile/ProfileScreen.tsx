@@ -108,15 +108,12 @@ const ProfileScreen = () => {
         <View style={styles.accountCard}>
           <Text style={styles.sectionTitle}>General</Text>
           <CardItem icon="bell" label="Notification" onPress={() => {}} />
-
           <View style={styles.accountDivider} />
 
           <CardItem icon="language" label="Language" onPress={() => {}} />
-
           <View style={styles.accountDivider} />
 
           <CardItem icon="globe" label="Country" onPress={() => {}} />
-
           <View style={styles.accountDivider} />
 
           <CardItem icon="trash" label="Clear Cache" onPress={() => {}} />
@@ -126,11 +123,9 @@ const ProfileScreen = () => {
         <View style={styles.accountCard}>
           <Text style={styles.sectionTitle}>More</Text>
           <CardItem icon="file-text" label="Legal and Policy" onPress={() => {}}/>
-
           <View style={styles.accountDivider} />
 
           <CardItem icon="life-ring" label="Help and Feedback" onPress={() => {}}/>
-
           <View style={styles.accountDivider} />
 
           <CardItem icon="info-circle" label="About Us" onPress={() => {}} />
