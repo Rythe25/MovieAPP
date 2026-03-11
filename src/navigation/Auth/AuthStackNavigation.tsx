@@ -22,16 +22,16 @@ const RootStack = createNativeStackNavigator<AuthStackParamList>({
     
   },
   screens: {
-    // Root: RootScreen,
-    // SignUp: SignUpScreen, 
-    // Login: LoginScreen,
-    // CreateNewPassword : CreateNewPasswordScreen,
-    // PasswordReset : PasswordResetScreen,
-    // Verification : VerificationScreen,
+    Root: RootScreen,
+    SignUp: SignUpScreen, 
+    Login: LoginScreen,
+    CreateNewPassword : CreateNewPasswordScreen,
+    PasswordReset : PasswordResetScreen,
+    Verification : VerificationScreen,
     // PasswordVerification : PasswordVerificationScreen,
     Profile: ProfileScreen,
     EditProfile: EditProfileScreen,
-    // HomeStack : BottomNavigation,
+    HomeStack : BottomNavigation,
   },
 });
 

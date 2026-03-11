@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, Pressable, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
 interface CardItemProps {
@@ -9,17 +9,25 @@ interface CardItemProps {
 
 const CardItem: React.FC<CardItemProps> = ({ icon, label, onPress }) => {
   return (
-    <TouchableOpacity style={styles.cardItemRow} onPress={onPress}>
-      <View style={styles.infoContainer}>
-        <View style={styles.iconContainer}>
-          <FontAwesome name={icon} size={16} color="#0b0f1a" />
-        </View>
+    <Pressable style={styles.cardItemRow} onPress={onPress}>
+      {({ pressed }) => (
+        <>
+          <View style={styles.infoContainer}>
+            <View style={styles.iconContainer}>
+              <FontAwesome
+                name={icon}
+                size={16}
+                color={pressed ? "#12cdd9" : "#c7c7c7"}
+              />
+            </View>
 
-        <Text style={styles.accountText}>{label}</Text>
-      </View>
+            <Text style={styles.accountText}>{label}</Text>
+          </View>
 
-      <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-    </TouchableOpacity>
+          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
+        </>
+      )}
+    </Pressable>
   );
 };
 
@@ -42,7 +50,7 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: "#868692",
+    backgroundColor: "#26262965",
     alignItems: "center",
     justifyContent: "center",
   },
