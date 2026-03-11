@@ -7,6 +7,7 @@ type AuthStackParamList = {
     Verification: undefined;
     // PasswordVerification: undefined;
     HomeStack: undefined;
+    EditProfile: undefined;
 };
 
 export default AuthStackParamList;

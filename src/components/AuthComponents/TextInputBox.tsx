@@ -1,14 +1,10 @@
-import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   TextInput,
 } from "react-native";
-import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface TextInputProps {
   label: string;
@@ -33,7 +29,7 @@ const TextInputBox: FC<TextInputProps> = ({
         <TextInput
           style={styles.textInputstyle}
           placeholder={placeholder}
-          placeholderTextColor={"white"}
+          placeholderTextColor={"#868692"}
           value={value}
           onChangeText={onChangeText}
         />
@@ -48,35 +44,31 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 0.8,
     borderColor: "#868692",
-    height: 70,
-    width: 360,
+    height: 64,
+    width: "100%",
+    maxWidth: 360,
     borderRadius: 30,
+    paddingHorizontal: 18,
+    justifyContent: "center",
   },
   labelContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
-    position: "relative",
-    alignSelf: "flex-start",
-    justifyContent: "center",
-    alignItems: "center",
+    position: "absolute",
     top: -10,
-    left: 20,
+    left: 16,
+    paddingHorizontal: 6,
+    backgroundColor: "#1f1d2b",
   },
   labelStyle: {
     color: "white",
-    backgroundColor: "#1f1d2b",
     fontSize: 16,
   },
   inputContainer: {
-    flex: 1,
-    alignItems: "center",
+    justifyContent: "center",
   },
   textInputstyle: {
-    // borderWidth:1,
-    // borderColor:'white',
-    position: "absolute",
-    width: 320,
-    top: -10,
     color: "white",
+    fontSize: 16,
+    paddingVertical: 0,
+    textAlignVertical: "center",
   },
 });

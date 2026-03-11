@@ -1,25 +1,41 @@
-import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  StyleProp,
+  StyleSheet,
+  Text,
+  TextStyle,
+  TouchableOpacity,
+  ViewStyle,
+} from "react-native";
 
 interface TextButtonProps {
   title: string;
-  // screen?: keyof AuthStackParamList;
   onPress?: () => void;
+  variant?: "inline" | "block";
+  containerStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
 }
 
-type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
-
-const TextButton: FC<TextButtonProps> = ({ title, onPress }) => {
-  const navigation = useNavigation<AuthNavProp>();
+const TextButton: FC<TextButtonProps> = ({
+  title,
+  onPress,
+  variant = "inline",
+  containerStyle,
+  textStyle,
+}) => {
+  if (variant === "block") {
+    return (
+      <TouchableOpacity
+        style={[styles.container, containerStyle]}
+        onPress={onPress}
+      >
+        <Text style={[styles.font, textStyle]}>{title}</Text>
+      </TouchableOpacity>
+    );
+  }
 
   return (
-    // <TouchableOpacity style={styles.container} onPress={() => navigation.navigate(screen)}>
-    //  <Text style={styles.font}> {title}</Text>
-    // </TouchableOpacity>
-    <Text style={styles.font} onPress={onPress}>
+    <Text style={[styles.font, textStyle]} onPress={onPress}>
       {title}
     </Text>
   );
@@ -28,6 +44,10 @@ const TextButton: FC<TextButtonProps> = ({ title, onPress }) => {
 export default TextButton;
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
   font: {
     fontSize: 18,
     color: "#12cdd9",

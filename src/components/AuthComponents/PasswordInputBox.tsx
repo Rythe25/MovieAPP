@@ -1,6 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import { FC } from "react"
-import { StyleSheet, Text, TouchableOpacity, View, TextInput } from "react-native"
+import { FC, useState } from "react"
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native"
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 interface PasswordInputProps {
@@ -16,6 +15,8 @@ const PasswordInputBox: FC<PasswordInputProps> = ({
   value,
   onChangeText,
 }) => {
+  const [isVisible, setIsVisible] = useState(false);
+
   return (
     <View style={styles.container}>
       <View style={styles.labelContainer}>
@@ -28,16 +29,23 @@ const PasswordInputBox: FC<PasswordInputProps> = ({
             <TextInput
               style={styles.textInputstyle}
               placeholder={placeholder}
-              placeholderTextColor="white"
-              secureTextEntry
+              placeholderTextColor="#868692"
+              secureTextEntry={!isVisible}
               value={value}
               onChangeText={onChangeText}
             />
           </View>
 
-          <View style={styles.hiddenContainer}>
-            <FontAwesome6 name="eye-low-vision" size={24} color="white" />
-          </View>
+          <TouchableOpacity
+            style={styles.hiddenContainer}
+            onPress={() => setIsVisible((prev) => !prev)}
+          >
+            <FontAwesome6
+              name={isVisible ? "eye" : "eye-slash"}
+              size={20}
+              color="white"
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -49,53 +57,43 @@ const styles = StyleSheet.create({
   container: {
     borderWidth: 0.8,
     borderColor:'#868692',
-    height: 70,
-    width: 360,
-    borderRadius: 30
+    height: 64,
+    width: "100%",
+    maxWidth: 360,
+    borderRadius: 30,
+    paddingHorizontal: 18,
+    justifyContent: "center",
   },
   labelContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
-    position: 'relative',
-    alignSelf: "flex-start",
-    justifyContent: 'center',
-    alignItems: 'center',
+    position: "absolute",
     top: -10,
-    left: 20
-
+    left: 16,
+    paddingHorizontal: 6,
+    backgroundColor: "#1f1d2b",
   },
   labelStyle: {
     color: 'white',
-    backgroundColor: '#1f1d2b',
     fontSize: 16
   },
   inputContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
-    position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: -10,
+    justifyContent: "center",
   },
   passwordContainer:{
     flexDirection: 'row',
+    alignItems: "center",
   },
   passwordInputContainer:{
-    // borderWidth:1,
-    // borderColor:'white',
-    alignSelf: "flex-start",
+    flex: 1,
   },
   textInputstyle: {
-    // borderWidth:1,
-    // borderColor:'white',
-    width:270,
-    color: 'white'
+    color: "white",
+    fontSize: 16,
+    paddingVertical: 0,
+    textAlignVertical: "center",
   },
   hiddenContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
-    width:50,
-    justifyContent:'center',
-    alignItems: 'center'
+    width: 36,
+    alignItems: "center",
+    justifyContent: "center",
   }
 });
