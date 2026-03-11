@@ -4,77 +4,65 @@ import {
   View,
   Image,
   ScrollView,
-  TouchableOpacity,
   FlatList,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { useRoute } from "@react-navigation/native";
+
 import ScreenHeader from "../../components/AuthComponents/ScreenHeader";
 import TabHeader from "../../components/HomeComponents/TabHeader";
 
+import {
+  fetchMovieDetail,
+  fetchMovieReviews,
+  fetchMovieCast,
+} from "../../network/service/movie/movieService";
+
 const tabs = ["About Movie", "Reviews", "Cast"];
 
-const reviews = [
-  {
-    id: 1,
-    name: "Iqbal Shafiq Rozan",
-    rating: 6.3,
-    text: "From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets.",
-  },
-  {
-    id: 2,
-    name: "Iqbal Shafiq Rozan",
-    rating: 6.3,
-    text: "From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets.",
-  },
-];
-
-const cast = [
-  {
-    id: 1,
-    name: "Tom Holland",
-    image: "https://i.pravatar.cc/200?img=10",
-  },
-  {
-    id: 2,
-    name: "Zendaya",
-    image: "https://i.pravatar.cc/200?img=11",
-  },
-  {
-    id: 3,
-    name: "Benedict Cumberbatch",
-    image: "https://i.pravatar.cc/200?img=12",
-  },
-  {
-    id: 4,
-    name: "Brad Pitt",
-    image: "https://i.pravatar.cc/200?img=13",
-  },
-  {
-    id: 5,
-    name: "Tom Holland",
-    image: "https://i.pravatar.cc/200?img=10",
-  },
-  {
-    id: 6,
-    name: "Zendaya",
-    image: "https://i.pravatar.cc/200?img=11",
-  },
-  {
-    id: 7,
-    name: "Benedict Cumberbatch",
-    image: "https://i.pravatar.cc/200?img=12",
-  },
-  {
-    id: 8,
-    name: "Brad Pitt",
-    image: "https://i.pravatar.cc/200?img=13",
-  },
-];
-
 const DetailScreen = () => {
+  const route = useRoute<any>();
+  const { movieId } = route.params;
+
   const [activeTab, setActiveTab] = useState(0);
+  const [movie, setMovie] = useState<any>(null);
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [cast, setCast] = useState<any[]>([]);
+
+  useEffect(() => {
+    loadMovie();
+    loadReviews();
+    loadCast();
+  }, []);
+
+  const loadMovie = async () => {
+    try {
+      const data = await fetchMovieDetail(movieId);
+      setMovie(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const loadReviews = async () => {
+    try {
+      const data = await fetchMovieReviews(movieId);
+      setReviews(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const loadCast = async () => {
+    try {
+      const data = await fetchMovieCast(movieId);
+      setCast(data.slice(0, 12));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -85,15 +73,16 @@ const DetailScreen = () => {
         <View style={styles.bannerContainer}>
           <Image
             source={{
-              uri: "https://image.tmdb.org/t/p/w780/14QbnygCuTO0vl7CAFmPf1fgZfV.jpg",
+              uri: `https://image.tmdb.org/t/p/w780${movie?.backdrop_path}`,
             }}
             style={styles.banner}
           />
 
-          {/* Rating */}
           <View style={styles.ratingBadge}>
             <FontAwesome name="star" size={12} color="#ffb800" />
-            <Text style={styles.ratingText}>9.5</Text>
+            <Text style={styles.ratingText}>
+              {movie?.vote_average?.toFixed(1)}
+            </Text>
           </View>
         </View>
 
@@ -101,43 +90,43 @@ const DetailScreen = () => {
         <View style={styles.movieInfoContainer}>
           <Image
             source={{
-              uri: "https://image.tmdb.org/t/p/w342/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+              uri: `https://image.tmdb.org/t/p/w342${movie?.poster_path}`,
             }}
             style={styles.poster}
           />
 
           <View style={styles.movieText}>
-            <Text style={styles.movieTitle}>Spiderman No Way Home</Text>
+            <Text style={styles.movieTitle}>{movie?.title}</Text>
           </View>
         </View>
 
         <View style={styles.metaRow}>
           <FontAwesome name="calendar" size={12} color="#868692" />
-          <Text style={styles.metaText}>2021</Text>
+          <Text style={styles.metaText}>
+            {movie?.release_date?.split("-")[0]}
+          </Text>
+
           <Text style={styles.metaDivider}>|</Text>
+
           <AntDesign name="clock-circle" size={12} color="#868692" />
-          <Text style={styles.metaText}>148 Minutes</Text>
+          <Text style={styles.metaText}>{movie?.runtime} Minutes</Text>
+
           <Text style={styles.metaDivider}>|</Text>
+
           <FontAwesome name="film" size={12} color="#868692" />
-          <Text style={styles.metaText}>Action</Text>
+          <Text style={styles.metaText}>{movie?.genres?.[0]?.name}</Text>
         </View>
 
-       {/* Tabs */}
+        {/* Tabs */}
         <View style={{ marginTop: 30 }}>
           <TabHeader title={tabs} onTabChange={setActiveTab} />
         </View>
 
         {/* Tab Content */}
         <View style={styles.contentContainer}>
-
           {/* ABOUT */}
           {activeTab === 0 && (
-            <Text style={styles.aboutText}>
-              From DC Comics comes the Suicide Squad, an antihero team of
-              incarcerated supervillains who act as deniable assets for the
-              United States government, undertaking high-risk black ops
-              missions in exchange for commuted prison sentences.
-            </Text>
+            <Text style={styles.aboutText}>{movie?.overview}</Text>
           )}
 
           {/* REVIEWS */}
@@ -145,22 +134,28 @@ const DetailScreen = () => {
             <View>
               {reviews.map((item) => (
                 <View key={item.id} style={styles.reviewItem}>
-
                   <View style={styles.reviewImgScore}>
                     <Image
-                      source={{ uri: "https://i.pravatar.cc/200" }}
+                      source={{
+                        uri: item.author_details?.avatar_path
+                          ? `https://image.tmdb.org/t/p/w185${item.author_details.avatar_path}`
+                          : "https://i.pravatar.cc/200",
+                      }}
                       style={styles.reviewAvatar}
                     />
 
-                    <Text style={styles.reviewRating}>{item.rating}</Text>
+                    {item.author_details?.rating && (
+                      <Text style={styles.reviewRating}>
+                        {item.author_details.rating}
+                      </Text>
+                    )}
                   </View>
-
 
                   <View style={styles.reviewTextContainer}>
-                    <Text style={styles.reviewName}>{item.name}</Text>
-                    <Text style={styles.reviewText}>{item.text}</Text>
-                  </View>
+                    <Text style={styles.reviewName}>{item.author}</Text>
 
+                    <Text style={styles.reviewText}>{item.content}</Text>
+                  </View>
                 </View>
               ))}
             </View>
@@ -175,24 +170,23 @@ const DetailScreen = () => {
               scrollEnabled={false}
               renderItem={({ item }) => (
                 <View style={styles.castItem}>
-
                   <Image
-                    source={{ uri: item.image }}
+                    source={{
+                      uri: item.profile_path
+                        ? `https://image.tmdb.org/t/p/w185${item.profile_path}`
+                        : "https://i.pravatar.cc/200",
+                    }}
                     style={styles.castImg}
                   />
 
                   <Text style={styles.castName}>{item.name}</Text>
-
                 </View>
               )}
             />
           )}
-
         </View>
-
       </ScrollView>
     </SafeAreaView>
-
   );
 };
 
@@ -200,20 +194,20 @@ export default DetailScreen;
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 0,
-    flex:1,
-    backgroundColor: '#1f1d2b'
+    flex: 1,
+    backgroundColor: "#1f1d2b",
   },
+
   bannerContainer: {
     position: "relative",
   },
+
   banner: {
     width: "100%",
     height: 200,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
     borderRadius: 20,
   },
+
   ratingBadge: {
     position: "absolute",
     right: 10,
@@ -226,10 +220,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 4,
   },
+
   ratingText: {
     color: "#ffb800",
     fontWeight: "600",
   },
+
   movieInfoContainer: {
     flexDirection: "row",
     marginTop: -80,
@@ -237,87 +233,105 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 15,
   },
+
   poster: {
     width: 100,
     height: 140,
     borderRadius: 16,
   },
+
   movieText: {
     flex: 1,
     justifyContent: "flex-end",
   },
+
   movieTitle: {
     color: "white",
     fontSize: 20,
     lineHeight: 25,
     fontWeight: "600",
   },
+
   metaRow: {
     flexDirection: "row",
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     gap: 6,
     marginTop: 20,
   },
+
   metaText: {
     color: "#868692",
     fontSize: 16,
   },
+
   metaDivider: {
     color: "#868692",
   },
+
   contentContainer: {
     paddingHorizontal: 20,
     marginTop: 20,
   },
+
   aboutText: {
     color: "white",
     lineHeight: 22,
     fontSize: 16,
   },
+
   reviewItem: {
     flexDirection: "row",
     marginBottom: 20,
     alignItems: "flex-start",
     gap: 10,
   },
+
   reviewImgScore: {
-    alignItems: 'center',
-    gap:10
+    alignItems: "center",
+    gap: 10,
   },
+
   reviewAvatar: {
     width: 40,
     height: 40,
     borderRadius: 20,
   },
+
   reviewTextContainer: {
     flex: 1,
   },
+
   reviewName: {
     color: "white",
     fontWeight: "600",
     marginBottom: 4,
   },
+
   reviewText: {
     color: "white",
-    fontWeight: '400',
+    fontWeight: "400",
     fontSize: 16,
     lineHeight: 22,
   },
+
   reviewRating: {
     color: "#0296e5",
     fontWeight: "600",
   },
+
   castItem: {
     flex: 1,
     alignItems: "center",
     marginBottom: 20,
   },
+
   castImg: {
     width: 90,
     height: 90,
     borderRadius: 45,
   },
+
   castName: {
     color: "white",
     marginTop: 8,

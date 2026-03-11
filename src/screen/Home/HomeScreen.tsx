@@ -63,6 +63,7 @@ export default function HomeScreen() {
           {trending.map((movie, index) => (
             <TrendingCard
               key={movie.id}
+              id={movie.id}
               number={index + 1}
               poster={movie.poster_path}
             />

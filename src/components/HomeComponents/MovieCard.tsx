@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export interface Movie {
   id: number;
@@ -13,27 +14,35 @@ interface MovieCardProps {
 
 const MovieCard: FC<MovieCardProps> = ({ movie }) => {
 
+  const navigation = useNavigation<any>();
+
   const posterURL =
     "https://image.tmdb.org/t/p/w500" + movie.poster_path;
 
+  const handlePress = () => {
+    navigation.navigate("Detail", {
+      movieId: movie.id
+    });
+  };
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={handlePress}>
       <Image source={{ uri: posterURL }} style={styles.poster} />
-    </View>
+    </TouchableOpacity>
   );
 };
 
 export default MovieCard;
 
 const styles = StyleSheet.create({
-  card:{
-    flex:1,
-    marginBottom:20,
-    alignItems:"center"
+  card: {
+    flex: 1,
+    marginBottom: 20,
+    alignItems: "center",
   },
-  poster:{
-    width:110,
-    height:150,
-    borderRadius:12
-  }
+  poster: {
+    width: 110,
+    height: 150,
+    borderRadius: 12,
+  },
 });

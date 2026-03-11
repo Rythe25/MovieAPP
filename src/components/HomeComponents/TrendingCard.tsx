@@ -1,33 +1,40 @@
 import { useNavigation } from "@react-navigation/native";
-import { FontAwesome} from "@expo/vector-icons";
 import { FC } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
+  TouchableOpacity,
 } from "react-native";
 
 interface TrendingCardProps {
+  id: number;
   number: number;
   poster: string;
 }
 
-const TrendingCard: FC<TrendingCardProps> = ({ number, poster}) => {
+const TrendingCard: FC<TrendingCardProps> = ({ id, number, poster }) => {
+
+  const navigation = useNavigation<any>();
+
   const posterURL =
     "https://image.tmdb.org/t/p/w500" + poster;
 
+  const handlePress = () => {
+    navigation.navigate("Detail", {
+      movieId: id
+    });
+  };
+
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.movieCard}
-        source={{ uri: posterURL }}
-      />
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
+      <Image style={styles.movieCard} source={{ uri: posterURL }} />
 
       <Text style={styles.trendingNumber}>
         {number}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
