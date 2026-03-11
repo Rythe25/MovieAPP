@@ -1,4 +1,11 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import globalStyles from "../../components/styles/style";
@@ -9,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthService } from "../../network/service/auth/authService";
 import { FontAwesome } from "@expo/vector-icons";
 import TextButton from "../../components/AuthComponents/TextButton";
+import CardItem from "../../components/ProfileComponents/CardItem";
 
 const ProfileScreen = () => {
   const navigation =
@@ -26,7 +34,6 @@ const ProfileScreen = () => {
         index: 0,
         routes: [{ name: "Root" }],
       });
-
     } catch (error) {
       console.log("Logout error:", error);
     } finally {
@@ -42,176 +49,115 @@ const ProfileScreen = () => {
       >
         <Text style={styles.title}>Profile</Text>
 
-      <View style={styles.profileCard}>
-        <Image
-          source={require("../../../assets/icon.png")}
-          style={styles.avatar}
-        />
+        <View style={styles.profileCard}>
+          <Image
+            source={require("../../../assets/icon.png")}
+            style={styles.avatar}
+          />
 
-        <View style={styles.userInfo}>
-          <Text style={styles.name}>Tiffany</Text>
-          <Text style={styles.email}>tiffany@gmail.com</Text>
+          <View style={styles.userInfo}>
+            <Text style={styles.name}>Tiffany</Text>
+            <Text style={styles.email}>tiffany@gmail.com</Text>
+          </View>
+
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => navigation.navigate("EditProfile")}
+          >
+            <FontAwesome name="edit" size={20} color="#12cdd9" />
+          </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-          style={styles.editButton}
-          onPress={() => navigation.navigate("EditProfile")}
-        >
-          <FontAwesome name="edit" size={20} color="#12cdd9" />
-        </TouchableOpacity>
-      </View>
+        {(() => {
+          const activePlan: "silver" | "gold" | "diamond" = "gold";
 
-      {(() => {
-        const activePlan: "silver" | "gold" | "diamond" = "gold";
+          const planConfig = {
+            silver: {
+              title: "Standard Member",
+              description: "Starter plan for casual viewers.",
+              cardStyle: styles.planSilverCard,
+              badgeStyle: styles.planSilverBadge,
+            },
+            gold: {
+              title: "Premium Member",
+              description: "Most popular plan with HD access.",
+              cardStyle: styles.planGoldCard,
+              badgeStyle: styles.planGoldBadge,
+            },
+            diamond: {
+              title: "Premium Plus Member",
+              description: "All-access plan with premium perks.",
+              cardStyle: styles.planDiamondCard,
+              badgeStyle: styles.planDiamondBadge,
+            },
+          } as const;
 
-        const planConfig = {
-          silver: {
-            title: "Standard Member",
-            description: "Starter plan for casual viewers.",
-            cardStyle: styles.planSilverCard,
-            badgeStyle: styles.planSilverBadge,
-          },
-          gold: {
-            title: "Premium Member",
-            description: "Most popular plan with HD access.",
-            cardStyle: styles.planGoldCard,
-            badgeStyle: styles.planGoldBadge,
-          },
-          diamond: {
-            title: "Premium Plus Member",
-            description: "All-access plan with premium perks.",
-            cardStyle: styles.planDiamondCard,
-            badgeStyle: styles.planDiamondBadge,
-          },
-        } as const;
+          const plan = planConfig[activePlan];
 
-        const plan = planConfig[activePlan];
-
-        return (
-          <View style={[styles.planCard, plan.cardStyle]}>
-            <View style={styles.planRow}>
-              <View style={[styles.planBadge, plan.badgeStyle]}>
-                <FontAwesome name="diamond" size={16} color="#0b0f1a" />
-              </View>
-              <View style={styles.planInfo}>
-                <Text style={styles.planTitle}>{plan.title}</Text>
-                <Text style={styles.planDescription}>{plan.description}</Text>
+          return (
+            <View style={[styles.planCard, plan.cardStyle]}>
+              <View style={styles.planRow}>
+                <View style={[styles.planBadge, plan.badgeStyle]}>
+                  <FontAwesome name="diamond" size={16} color="#0b0f1a" />
+                </View>
+                <View style={styles.planInfo}>
+                  <Text style={styles.planTitle}>{plan.title}</Text>
+                  <Text style={styles.planDescription}>{plan.description}</Text>
+                </View>
               </View>
             </View>
-          </View>
-        );
-      })()}
+          );
+        })()}
 
-      <Text style={styles.sectionTitle}>Account</Text>
-      <View style={styles.accountCard}>
-        <TouchableOpacity style={styles.accountRow} onPress={() => {}}>
-          <View style={styles.accountLeft}>
-            <View style={styles.accountIcon}>
-              <FontAwesome name="id-badge" size={16} color="#0b0f1a" />
-            </View>
-            <Text style={styles.accountText}>Member</Text>
-          </View>
-          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-        </TouchableOpacity>
+        // Account
+        <Text style={styles.sectionTitle}>Account</Text>
+        <View style={styles.accountCard}>
+          <CardItem icon="id-badge" label="Member" onPress={() => {}} />
 
-        <View style={styles.accountDivider} />
+          <View style={styles.accountDivider} />
 
-        <TouchableOpacity style={styles.accountRow} onPress={() => {}}>
-          <View style={styles.accountLeft}>
-            <View style={styles.accountIcon}>
-              <FontAwesome name="lock" size={16} color="#0b0f1a" />
-            </View>
-            <Text style={styles.accountText}>Change Password</Text>
-          </View>
-          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-        </TouchableOpacity>
-      </View>
+          <CardItem icon="lock" label="Change Password" onPress={() => {}} />
+        </View>
 
-      <Text style={styles.sectionTitle}>General</Text>
-      <View style={styles.accountCard}>
-        <TouchableOpacity style={styles.accountRow} onPress={() => {}}>
-          <View style={styles.accountLeft}>
-            <View style={styles.accountIcon}>
-              <FontAwesome name="bell" size={16} color="#0b0f1a" />
-            </View>
-            <Text style={styles.accountText}>Notification</Text>
-          </View>
-          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-        </TouchableOpacity>
+        // General
+        <Text style={styles.sectionTitle}>General</Text>
+        <View style={styles.accountCard}>
+          <CardItem icon="bell" label="Notification" onPress={() => {}} />
 
-        <View style={styles.accountDivider} />
+          <View style={styles.accountDivider} />
 
-        <TouchableOpacity style={styles.accountRow} onPress={() => {}}>
-          <View style={styles.accountLeft}>
-            <View style={styles.accountIcon}>
-              <FontAwesome name="language" size={16} color="#0b0f1a" />
-            </View>
-            <Text style={styles.accountText}>Language</Text>
-          </View>
-          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-        </TouchableOpacity>
+          <CardItem icon="language" label="Language" onPress={() => {}} />
 
-        <View style={styles.accountDivider} />
+          <View style={styles.accountDivider} />
 
-        <TouchableOpacity style={styles.accountRow} onPress={() => {}}>
-          <View style={styles.accountLeft}>
-            <View style={styles.accountIcon}>
-              <FontAwesome name="globe" size={16} color="#0b0f1a" />
-            </View>
-            <Text style={styles.accountText}>Country</Text>
-          </View>
-          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-        </TouchableOpacity>
+          <CardItem icon="globe" label="Country" onPress={() => {}} />
 
-        <View style={styles.accountDivider} />
+          <View style={styles.accountDivider} />
 
-        <TouchableOpacity style={styles.accountRow} onPress={() => {}}>
-          <View style={styles.accountLeft}>
-            <View style={styles.accountIcon}>
-              <FontAwesome name="trash" size={16} color="#0b0f1a" />
-            </View>
-            <Text style={styles.accountText}>Clear Cache</Text>
-          </View>
-          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-        </TouchableOpacity>
-      </View>
+          <CardItem icon="trash" label="Clear Cache" onPress={() => {}} />
+        </View>
 
-      <Text style={styles.sectionTitle}>More</Text>
-      <View style={styles.accountCard}>
-        <TouchableOpacity style={styles.accountRow} onPress={() => {}}>
-          <View style={styles.accountLeft}>
-            <View style={styles.accountIcon}>
-              <FontAwesome name="file-text" size={16} color="#0b0f1a" />
-            </View>
-            <Text style={styles.accountText}>Legal and Policy</Text>
-          </View>
-          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-        </TouchableOpacity>
+        // More
+        <Text style={styles.sectionTitle}>More</Text>
+        <View style={styles.accountCard}>
+          <CardItem
+            icon="file-text"
+            label="Legal and Policy"
+            onPress={() => {}}
+          />
 
-        <View style={styles.accountDivider} />
+          <View style={styles.accountDivider} />
 
-        <TouchableOpacity style={styles.accountRow} onPress={() => {}}>
-          <View style={styles.accountLeft}>
-            <View style={styles.accountIcon}>
-              <FontAwesome name="life-ring" size={16} color="#0b0f1a" />
-            </View>
-            <Text style={styles.accountText}>Help and Feedback</Text>
-          </View>
-          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-        </TouchableOpacity>
+          <CardItem
+            icon="life-ring"
+            label="Help and Feedback"
+            onPress={() => {}}
+          />
 
-        <View style={styles.accountDivider} />
+          <View style={styles.accountDivider} />
 
-        <TouchableOpacity style={styles.accountRow} onPress={() => {}}>
-          <View style={styles.accountLeft}>
-            <View style={styles.accountIcon}>
-              <FontAwesome name="info-circle" size={16} color="#0b0f1a" />
-            </View>
-            <Text style={styles.accountText}>About Us</Text>
-          </View>
-          <FontAwesome name="chevron-right" size={14} color="#12cdd9" />
-        </TouchableOpacity>
-      </View>
+          <CardItem icon="info-circle" label="About Us" onPress={() => {}} />
+        </View>
 
         <TextButton
           variant="block"
@@ -345,31 +291,6 @@ const styles = StyleSheet.create({
     borderColor: "#2f3142",
     paddingVertical: 4,
     marginBottom: 24,
-  },
-  accountRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-  },
-  accountLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-  accountIcon: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: "#868692",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  accountText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "500",
   },
   accountDivider: {
     height: 1,

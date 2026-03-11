@@ -7,14 +7,13 @@ import globalStyles from "../../components/styles/style";
 import TextInputBox from "../../components/AuthComponents/TextInputBox";
 import PasswordInputBox from "../../components/AuthComponents/PasswordInputBox";
 import TextButton from "../../components/AuthComponents/TextButton";
+import DefaultButton from "../../components/AuthComponents/DefaultButton";
 
 const EditProfileScreen = () => {
   const navigation = useNavigation();
-  const [fullName, setFullName] = useState("Tiffany");
-  const [email, setEmail] = useState("tiffany@gmail.com");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [phone, setPhone] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
 
   return (
     <SafeAreaView style={globalStyles.container}>
@@ -46,36 +45,27 @@ const EditProfileScreen = () => {
 
       <View style={styles.form}>
         <TextInputBox
-          label="Full Name"
-          placeholder="Enter full name"
-          value={fullName}
-          onChangeText={setFullName}
+          label="First Name"
+          placeholder="Enter first name"
+          value={firstName}
+          onChangeText={setFirstName}
         />
         <TextInputBox
-          label="Email"
+          label="Last Name"
+          placeholder="Enter last name"
+          value={lastName}
+          onChangeText={setLastName}
+        />
+        <TextInputBox
+          label="Last Name"
           placeholder="Enter email"
           value={email}
           onChangeText={setEmail}
         />
-        <PasswordInputBox
-          label="Password"
-          placeholder="Enter password"
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TextInputBox
-          label="Phone Number"
-          placeholder="Enter phone number"
-          value={phone}
-          onChangeText={setPhone}
-        />
 
-        <TextButton
-          variant="block"
+        <DefaultButton
           title="Save Changes"
           onPress={() => {}}
-          containerStyle={styles.saveButton}
-          textStyle={styles.saveText}
         />
       </View>
     </SafeAreaView>
@@ -147,21 +137,6 @@ const styles = StyleSheet.create({
   },
   form: {
     alignItems: "center",
-    gap: 16,
-  },
-  saveButton: {
-    borderWidth: 1.5,
-    borderColor: "#12cdd9",
-    width: 360,
-    height: 56,
-    borderRadius: 28,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 8,
-  },
-  saveText: {
-    color: "#12cdd9",
-    fontSize: 18,
-    fontWeight: "600",
-  },
+    gap: 30,
+  }
 });
