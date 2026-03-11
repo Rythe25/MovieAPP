@@ -8,8 +8,8 @@ import ProfileScreen from "../../screen/Profile/ProfileScreen";
 const HomeStackNavigation = createNativeStackNavigator<HomeStackParamList>({
   screens: {
     Home: HomeScreen,
-    // Search: SearchScreen,
-    // Profile: ProfileScreen,
+    Search: SearchScreen,
+    Profile: ProfileScreen,
   },
 });
 
