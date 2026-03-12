@@ -15,6 +15,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import globalStyles from "../../components/styles/style";
 import CardItem from "../../components/ProfileComponents/CardItem";
 import TextButton from "../../components/AuthComponents/TextButton";
+import PopupModal from "../../components/ProfileComponents/PopupModal";
 
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -26,6 +27,7 @@ const ProfileScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
 
   const [loading, setLoading] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -45,8 +47,24 @@ const ProfileScreen = () => {
     }
   };
 
+  const confirmLogout = () => {
+    if (loading) return;
+    setShowLogoutModal(true);
+  };
+
+  const handleConfirmLogout = async () => {
+    setShowLogoutModal(false);
+    await handleLogout();
+  };
+
   return (
     <SafeAreaView edges={["top"]} style={globalStyles.container}>
+      <PopupModal
+        visible={showLogoutModal}
+        loading={loading}
+        onCancel={() => setShowLogoutModal(false)}
+        onConfirm={handleConfirmLogout}
+      />
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
@@ -135,7 +153,7 @@ const ProfileScreen = () => {
         <TextButton
           variant="block"
           title={loading ? "Logging Out..." : "Log Out"}
-          onPress={handleLogout}
+          onPress={confirmLogout}
           containerStyle={styles.logoutButton}
           textStyle={styles.textStyle}
         />

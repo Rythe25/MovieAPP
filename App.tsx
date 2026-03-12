@@ -6,7 +6,7 @@ import ProfileScreen from "./src/screen/Profile/ProfileScreen";
 import EditProfileScreen from "./src/screen/Profile/EditProfileScreen";
 import AuthStackNavigation from "./src/navigation/Auth/AuthStackNavigation";
 
-// const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const PROFILE_ONLY = true;
@@ -16,16 +16,16 @@ export default function App() {
     SystemUI.setBackgroundColorAsync("#171725");
   }, []);
 
-  // if (PROFILE_ONLY) {
-  //   return (
-  //     <NavigationContainer>
-  //       <Stack.Navigator screenOptions={{ headerShown: false }}>
-  //         <Stack.Screen name="Profile" component={ProfileScreen} />
-  //         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-  //       </Stack.Navigator>
-  //     </NavigationContainer>
-  //   );
-  // }
+  if (PROFILE_ONLY) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 
   return <AuthStackNavigation />;
 }
