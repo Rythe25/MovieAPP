@@ -8,7 +8,7 @@ import {
 
 interface TextInputProps {
   label: string;
-  placeholder: string;
+  placeholder?: string;
   value: string;
   onChangeText?: (text: string) => void;
 }

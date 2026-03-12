@@ -42,7 +42,10 @@ const LoginScreen = () => {
         return;
       }
 
-      await AsyncStorage.setItem("token", data.token);
+      await AsyncStorage.multiSet([
+        ["token", data.token],
+        ["user", JSON.stringify(data.user)]
+      ]);
 
       navigation.reset({
         index: 0,

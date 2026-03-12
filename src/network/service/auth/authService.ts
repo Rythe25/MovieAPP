@@ -77,4 +77,45 @@ export const AuthService = {
       throw error;
     }
   },
+  updateProfile: async (payload: {
+    first_name: string;
+    last_name: string;
+    email: string;
+  }) => {
+    try {
+      const response = await auth.put("/user/profile", payload);
+      return response.data;
+    } catch (error: any) {
+      console.log("Error update profile:", error.response?.data);
+      throw error;
+    }
+  },
+  // uploadProfilePhoto: async (image: any) => {
+  //   try {
+
+  //     const formData = new FormData();
+
+  //     formData.append("image", {
+  //       uri: image.uri,
+  //       name: image.fileName || "profile.jpg",
+  //       type: image.mimeType || "image/jpeg",
+  //     } as any);
+
+  //     const response = await auth.post(
+  //       "/user/profile-photo",
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+
+  //     return response.data;
+
+  //   } catch (error: any) {
+  //     console.log("Upload error:", error.response?.data || error);
+  //     throw error;
+  //   }
+  // }
 };

@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 import globalStyles from "../../components/styles/style";
 import CardItem from "../../components/ProfileComponents/CardItem";
@@ -22,6 +24,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import RootStackParamList from "../../navigation/Auth/RootStackParamList";
 
 import { AuthService } from "../../network/service/auth/authService";
+import { User } from "../../network/api/type/authType";
 
 const ProfileScreen = () => {
   const navigation =
@@ -29,6 +32,27 @@ const ProfileScreen = () => {
 
   const [loading, setLoading] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadUser();
+    }, [])
+  );
+
+  const loadUser = async () => {
+    const stored = await AsyncStorage.getItem("user");
+
+    if (stored) {
+      const u: User = JSON.parse(stored);
+      setUser(u);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -80,8 +104,11 @@ const ProfileScreen = () => {
           />
 
           <View style={styles.userInfo}>
-            <Text style={styles.name}>Tiffany</Text>
-            <Text style={styles.email}>tiffany@gmail.com</Text>
+            <Text style={styles.name}>
+              {user?.first_name} {user?.last_name}
+            </Text>
+
+            <Text style={styles.email}>{user?.email}</Text>
           </View>
 
           <TouchableOpacity
