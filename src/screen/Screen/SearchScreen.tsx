@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   SafeAreaView,
   StatusBar,
-  Dimensions,
 } from 'react-native';
 import { 
   ChevronLeft, 
@@ -32,9 +31,8 @@ interface Movie {
   image: string;
 }
 
-const { width } = Dimensions.get('window');
-
-const MOCK_MOVIES: Movie[] = [
+// --- Demo Data ---
+const DEMO_MOVIES: Movie[] = [
   {
     id: '1',
     title: 'Spiderman',
@@ -42,45 +40,61 @@ const MOCK_MOVIES: Movie[] = [
     genre: 'Action',
     year: '2019',
     duration: '139 minutes',
-    image: 'https://placehold.co/300x450/242A32/FFFFFF.png?text=Spiderman', 
+    image: 'https://images.tmdb.org/t/p/w500/r089KIn0j4uV8OitRnt3v2T587M.jpg', 
   },
   {
     id: '2',
-    title: 'Spider-Man: No Way H...',
+    title: 'Spider-Man: No Way Home',
     rating: '8.5',
     genre: 'Action',
     year: '2021',
-    duration: '139 minutes',
-    image: 'https://placehold.co/300x450/242A32/FFFFFF.png?text=No+Way+Home',
+    duration: '148 minutes',
+    image: 'https://images.tmdb.org/t/p/w500/1g0zzvWwsQwzQw19dmufIu9SfsZ.jpg',
   },
+  {
+    id: '3',
+    title: 'The Dark Knight',
+    rating: '9.0',
+    genre: 'Action',
+    year: '2008',
+    duration: '152 minutes',
+    image: 'https://images.tmdb.org/t/p/w500/qJ2tW6qR7qZ1c9UnFjCq9mH0z9u.jpg',
+  }
 ];
 
 export default function SearchScreen() {
   const [searchQuery, setSearchQuery] = useState('Spiderman');
-  // Change MOCK_MOVIES to [] to test the "No Result" state
-  const [movies, setMovies] = useState<Movie[]>(MOCK_MOVIES);
+
+  // Filter the demo data based on input
+  const filteredMovies = DEMO_MOVIES.filter((movie) =>
+    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   // --- Sub-Components ---
 
   const MovieItem = ({ item }: { item: Movie }) => (
-    <TouchableOpacity style={styles.card}>
+    <TouchableOpacity style={styles.card} activeOpacity={0.7}>
       <Image source={{ uri: item.image }} style={styles.poster} />
       <View style={styles.infoContainer}>
-        <Text style={styles.movieTitle}>{item.title}</Text>
+        <Text style={styles.movieTitle} numberOfLines={1}>{item.title}</Text>
+        
         <View style={styles.metaRow}>
-          <Star size={16} color="#FF8700" fill="#FF8700" />
+          <Star size={14} color="#FF8700" fill="#FF8700" />
           <Text style={[styles.metaText, { color: '#FF8700' }]}>{item.rating}</Text>
         </View>
+
         <View style={styles.metaRow}>
-          <Ticket size={16} color="#92929D" />
+          <Ticket size={14} color="#92929D" />
           <Text style={styles.metaText}>{item.genre}</Text>
         </View>
+
         <View style={styles.metaRow}>
-          <Calendar size={16} color="#92929D" />
+          <Calendar size={14} color="#92929D" />
           <Text style={styles.metaText}>{item.year}</Text>
         </View>
+
         <View style={styles.metaRow}>
-          <Clock size={16} color="#92929D" />
+          <Clock size={14} color="#92929D" />
           <Text style={styles.metaText}>{item.duration}</Text>
         </View>
       </View>
@@ -89,14 +103,11 @@ export default function SearchScreen() {
 
   const NoResultsView = () => (
     <View style={styles.emptyContainer}>
-      <View style={styles.illustrationWrapper}>
-        {/* Replace with your local asset: require('./assets/no-result.png') */}
-        <Image 
-          source={{ uri: 'https://i.ibb.co/vY8m0yM/no-results-icon.png' }} 
-          style={styles.emptyImage}
-          resizeMode="contain"
-        />
-      </View>
+      <Image 
+        source={{ uri: 'https://i.ibb.co/vY8m0yM/no-results-icon.png' }} 
+        style={styles.emptyImage}
+        resizeMode="contain"
+      />
       <Text style={styles.emptyTitle}>We Are Sorry, We Can{"\n"}Not Find The Movie :(</Text>
       <Text style={styles.emptySubtitle}>
         Find your movie by Type title,{"\n"}categories, years, etc
@@ -122,20 +133,15 @@ export default function SearchScreen() {
           placeholder="Search"
           placeholderTextColor="#67686D"
           value={searchQuery}
-          onChangeText={(text) => {
-            setSearchQuery(text);
-            // Example logic: if input is cleared, show empty state
-            if (text === "") setMovies([]);
-            else setMovies(MOCK_MOVIES);
-          }}
+          onChangeText={setSearchQuery}
         />
         <SearchIcon style={styles.searchIcon} color="#67686D" size={20} />
       </View>
 
-      {/* List or Empty State */}
-      {movies.length > 0 ? (
+      {/* Conditional Content */}
+      {filteredMovies.length > 0 ? (
         <FlatList
-          data={movies}
+          data={filteredMovies}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <MovieItem item={item} />}
           contentContainerStyle={styles.listContent}
@@ -170,7 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 25,
     paddingVertical: 15,
   },
   headerTitle: {
@@ -179,7 +185,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   searchContainer: {
-    marginHorizontal: 20,
+    marginHorizontal: 25,
     marginVertical: 15,
     position: 'relative',
   },
@@ -194,39 +200,41 @@ const styles = StyleSheet.create({
   searchIcon: {
     position: 'absolute',
     right: 20,
-    top: 14,
+    top: 13,
   },
   listContent: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 25,
+    paddingTop: 10,
   },
-  // Movie Card Styles
   card: {
     flexDirection: 'row',
     marginBottom: 24,
   },
   poster: {
-    width: 100,
-    height: 145,
+    width: 95,
+    height: 140,
     borderRadius: 16,
+    backgroundColor: '#3A3F47',
   },
   infoContainer: {
     marginLeft: 15,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    flex: 1,
+    paddingVertical: 2,
   },
   movieTitle: {
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: '400',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   metaRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 3,
   },
   metaText: {
     color: '#92929D',
-    fontSize: 14,
+    fontSize: 13,
     marginLeft: 10,
   },
   // Empty State Styles
@@ -234,43 +242,36 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 100, // Adjust to balance with bottom nav
-  },
-  illustrationWrapper: {
-    width: 150,
-    height: 150,
-    marginBottom: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingBottom: 80,
   },
   emptyImage: {
-    width: '100%',
-    height: '100%',
+    width: 100,
+    height: 100,
+    marginBottom: 20,
   },
   emptyTitle: {
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
-    lineHeight: 28,
+    lineHeight: 26,
   },
   emptySubtitle: {
     color: '#92929D',
-    fontSize: 14,
+    fontSize: 13,
     textAlign: 'center',
-    marginTop: 12,
-    lineHeight: 22,
+    marginTop: 10,
+    lineHeight: 20,
   },
-  // Bottom Nav Styles
+  // Bottom Nav
   bottomNav: {
     flexDirection: 'row',
-    height: 80,
+    height: 75,
     borderTopWidth: 1,
     borderTopColor: '#0296E5',
     backgroundColor: '#242A32',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingBottom: 10,
   },
   navItem: {
     alignItems: 'center',
@@ -285,9 +286,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   activeIndicator: {
-    marginTop: 6,
+    marginTop: 4,
     height: 2,
-    width: 24,
+    width: 22,
     backgroundColor: '#0296E5',
     borderRadius: 2,
   }
