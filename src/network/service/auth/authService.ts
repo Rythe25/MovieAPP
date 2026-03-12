@@ -7,7 +7,7 @@ import {
   LoginRes, 
   SendResetPassword,
   ResetPassword
-} from "../../api/type";
+} from "../../api/type/authType";
 
 export const AuthService = {
   Register: async (payload : RegisterReq): Promise<RegisterRes> => {

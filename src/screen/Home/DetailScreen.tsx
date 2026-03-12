@@ -9,7 +9,7 @@ import {
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
-import { useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 
 import ScreenHeader from "../../components/AuthComponents/ScreenHeader";
 import TabHeader from "../../components/HomeComponents/TabHeader";
@@ -19,17 +19,24 @@ import {
   fetchMovieReviews,
   fetchMovieCast,
 } from "../../network/service/movie/movieService";
+import {
+  Cast,
+  MovieDetail,
+  Review,
+  RouteParams,
+} from "../../network/api/type/movieType";
 
 const tabs = ["About Movie", "Reviews", "Cast"];
 
 const DetailScreen = () => {
-  const route = useRoute<any>();
+  type DetailRouteProp = RouteProp<{ Detail: RouteParams }, "Detail">;
+  const route = useRoute<DetailRouteProp>();
   const { movieId } = route.params;
 
   const [activeTab, setActiveTab] = useState(0);
-  const [movie, setMovie] = useState<any>(null);
-  const [reviews, setReviews] = useState<any[]>([]);
-  const [cast, setCast] = useState<any[]>([]);
+  const [movie, setMovie] = useState<MovieDetail | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [cast, setCast] = useState<Cast[]>([]);
 
   useEffect(() => {
     loadMovie();
@@ -197,17 +204,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#1f1d2b",
   },
-
   bannerContainer: {
     position: "relative",
   },
-
   banner: {
     width: "100%",
-    height: 200,
+    height: 250,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     borderRadius: 20,
   },
-
   ratingBadge: {
     position: "absolute",
     right: 10,
@@ -220,12 +226,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 4,
   },
-
   ratingText: {
     color: "#ffb800",
     fontWeight: "600",
   },
-
   movieInfoContainer: {
     flexDirection: "row",
     marginTop: -80,
@@ -233,25 +237,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 15,
   },
-
   poster: {
     width: 100,
     height: 140,
     borderRadius: 16,
+    marginTop: 10
   },
-
   movieText: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "center",
+    top : 35
   },
-
   movieTitle: {
     color: "white",
     fontSize: 20,
     lineHeight: 25,
     fontWeight: "600",
   },
-
   metaRow: {
     flexDirection: "row",
     justifyContent: "center",
@@ -259,79 +261,65 @@ const styles = StyleSheet.create({
     gap: 6,
     marginTop: 20,
   },
-
   metaText: {
     color: "#868692",
     fontSize: 16,
   },
-
   metaDivider: {
     color: "#868692",
   },
-
   contentContainer: {
     paddingHorizontal: 20,
     marginTop: 20,
   },
-
   aboutText: {
     color: "white",
     lineHeight: 22,
     fontSize: 16,
   },
-
   reviewItem: {
     flexDirection: "row",
     marginBottom: 20,
     alignItems: "flex-start",
     gap: 10,
   },
-
   reviewImgScore: {
     alignItems: "center",
     gap: 10,
   },
-
   reviewAvatar: {
     width: 40,
     height: 40,
     borderRadius: 20,
   },
-
   reviewTextContainer: {
     flex: 1,
   },
-
   reviewName: {
     color: "white",
     fontWeight: "600",
     marginBottom: 4,
   },
-
   reviewText: {
     color: "white",
     fontWeight: "400",
     fontSize: 16,
     lineHeight: 22,
   },
-
   reviewRating: {
     color: "#0296e5",
     fontWeight: "600",
   },
-
   castItem: {
     flex: 1,
     alignItems: "center",
     marginBottom: 20,
   },
-
   castImg: {
     width: 90,
     height: 90,
     borderRadius: 45,
   },
-
   castName: {
     color: "white",
     marginTop: 8,
