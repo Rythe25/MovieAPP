@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, ScrollView, FlatList } from "react-native";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import globalStyles from "../../components/styles/style";
 import SearchBox from "../../components/HomeComponents/SearchBox";
 import TrendingCard from "../../components/HomeComponents/TrendingCard";
-import HomeTabHeader from "../../components/HomeComponents/TabHeader";
+import { ActivityIndicator } from "react-native";
 
 import MovieCard, { Movie } from "../../components/HomeComponents/MovieCard";
 import { fetchMovies, fetchTrendingMovies } from "../../network/service/movie/movieService";
@@ -33,58 +33,122 @@ export default function HomeScreen() {
   const categoryLabels = ["Now Playing", "Upcoming", "Top Rated", "Popular"];
   const [activeTab, setActiveTab] = useState(0);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [page, setPage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const listRef = useRef<FlatList>(null);
 
   useEffect(() => {
-    loadMovies();
+    setMovies([]);
+    setPage(1);
+    loadMovies(1);
   }, [activeTab]);
 
-  const loadMovies = async () => {
+  const loadMovies = async (pageNumber = page) => {
     try {
-      const data = await fetchMovies(categories[activeTab]);
-      setMovies(data);
+      const data = await fetchMovies(categories[activeTab], pageNumber);
+
+      if (pageNumber === 1) {
+        setMovies(data);
+      } else {
+        setMovies(prev => [...prev, ...data]);
+      }
+
+      setPage(pageNumber);
+
     } catch (err) {
       console.log(err);
     }
   };
 
-  return (
-    <SafeAreaView style={globalStyles.homeContainer} edges={["top"]}>
-      <View style={styles.topSection}>
-        <Text style={globalStyles.homeTitle}>What do you want to watch?</Text>
-        <SearchBox placeholder="Search"></SearchBox>
-      </View>
+  const loadMoreMovies = async () => {
+    if (loadingMore) return;
 
-      <View style={styles.midSection}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{ height: 290 }}
-        >
-          {trending.map((movie, index) => (
-            <TrendingCard
-              key={movie.id}
-              id={movie.id}
-              number={index + 1}
-              poster={movie.poster_path}
+    setLoadingMore(true);
+
+    try {
+      const nextPage = page + 1;
+      const data = await fetchMovies(categories[activeTab], nextPage);
+
+      if (data.length > 0) {
+        setMovies((prev) => [...prev, ...data]);
+        setPage(nextPage);
+      }
+
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
+  
+return (
+  <SafeAreaView style={globalStyles.homeContainer} edges={["top"]}>
+    <FlatList
+      ref={listRef}
+      data={movies}
+      numColumns={3}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => <MovieCard movie={item} />}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 40 }}
+
+      ListHeaderComponent={
+        <>
+          <View style={styles.topSection}>
+            <Text style={globalStyles.homeTitle}>
+              What do you want to watch?
+            </Text>
+
+            <SearchBox placeholder="Search" />
+          </View>
+
+          <View style={styles.midSection}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={{ height: 290 }}
+            >
+              {trending.map((movie, index) => (
+                <TrendingCard
+                  key={movie.id}
+                  id={movie.id}
+                  number={index + 1}
+                  poster={movie.poster_path}
+                />
+              ))}
+            </ScrollView>
+          </View>
+
+          <View style={styles.bottomSection}>
+            <TabHeader
+              title={categoryLabels}
+              onTabChange={(index) => {
+                setActiveTab(index);
+                listRef.current?.scrollToOffset({
+                  offset: 0,
+                  animated: false,
+                });
+              }}
             />
-          ))}
-        </ScrollView>
-      </View>
+          </View>
+        </>
+      }
 
-      <View style={styles.bottomSection}>
-        <TabHeader title={categoryLabels} onTabChange={setActiveTab} />
+      onEndReached={loadMoreMovies}
+      onEndReachedThreshold={0.5}
 
-        <FlatList
-          data={movies}
-          numColumns={3}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ padding: 10 }}
-          renderItem={({ item }) => <MovieCard movie={item} />}
-        />
-      </View>
-    </SafeAreaView>
-  );
+      ListFooterComponent={
+        loadingMore ? (
+          <ActivityIndicator
+            size="large"
+            color="#0296e5"
+            style={{ marginVertical: 20 }}
+          />
+        ) : null
+      }
+    />
+  </SafeAreaView>
+);
 }
 
 const styles = StyleSheet.create({
@@ -99,6 +163,12 @@ const styles = StyleSheet.create({
   },
   bottomSection: {
     // borderColor: 'white', borderWidth: 1,
-    flex: 1,
+    // flex: 1,
+    marginBottom: 10
   },
+  loadingText: {
+    textAlign: "center",
+    paddingVertical: 20,
+    color: "#aaa",
+  }
 });

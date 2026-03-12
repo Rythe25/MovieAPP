@@ -10,10 +10,14 @@ export const fetchTrendingMovies = async () => {
   }
 };
 
-export const fetchMovies = async (category: string) => {
+export const fetchMovies = async (category: string, page = 1) => {
   try {
-    const response = await tmdb.get(`/movie/${category}`);
+    const response = await tmdb.get(`/movie/${category}`, {
+      params: { page }
+    });
+
     return response.data.results;
+
   } catch (error) {
     console.log(`Error fetching movies for category "${category}":`, error);
     throw error;

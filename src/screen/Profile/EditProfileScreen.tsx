@@ -72,7 +72,7 @@ const EditProfileScreen = () => {
       <View style={styles.profileSection}>
         <View style={styles.avatarWrap}>
           <Image
-            source={require("../../../assets/icon.png")}
+            source={{ uri: "https://picsum.photos/200/300" }}
             style={styles.avatar}
           />
 

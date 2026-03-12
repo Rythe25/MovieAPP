@@ -99,7 +99,7 @@ const ProfileScreen = () => {
         {/* Profile Card */}
         <View style={styles.profileCard}>
           <Image
-            source={require("../../../assets/icon.png")}
+            source={{ uri: "https://picsum.photos/200/300" }}
             style={styles.avatar}
           />
 
