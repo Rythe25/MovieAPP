@@ -28,14 +28,14 @@ const BottomNavigation = createBottomTabNavigator({
         },
       },
     },
-    // Search: {
-    //   screen: SearchScreen,
-    //   options: {
-    //     tabBarIcon: ({ color, size }) => {
-    //       return <FontAwesome name="search" size={size} color={color} />;
-    //     },
-    //   },
-    // },
+    Search: {
+      screen: SearchScreen,
+      options: {
+        tabBarIcon: ({ color, size }) => {
+          return <FontAwesome name="search" size={size} color={color} />;
+        },
+      },
+    },
     Profile: {
       screen: ProfileScreen,
       options: {

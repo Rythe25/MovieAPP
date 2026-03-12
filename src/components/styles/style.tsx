@@ -23,7 +23,7 @@ const globalStyles = StyleSheet.create({
   },
   homeContainer:{
       flex:1,
-      padding: 10,
+    //   padding: 15,
       paddingBottom: 0,
       backgroundColor: '#1f1d2b',
   },

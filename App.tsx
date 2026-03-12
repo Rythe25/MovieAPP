@@ -5,8 +5,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "./src/screen/Profile/ProfileScreen";
 import EditProfileScreen from "./src/screen/Profile/EditProfileScreen";
 import AuthStackNavigation from "./src/navigation/Auth/AuthStackNavigation";
+import SearchScreen from "./src/screen/Home/SearchScreen";
 
-// const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const PROFILE_ONLY = true;
@@ -20,8 +21,7 @@ export default function App() {
   //   return (
   //     <NavigationContainer>
   //       <Stack.Navigator screenOptions={{ headerShown: false }}>
-  //         <Stack.Screen name="Profile" component={ProfileScreen} />
-  //         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+  //         <Stack.Screen name="Search" component={SearchScreen} />
   //       </Stack.Navigator>
   //     </NavigationContainer>
   //   );
