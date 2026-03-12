@@ -1,16 +1,16 @@
 import { FC } from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
+import RootStackParamList from "../../navigation/Auth/RootStackParamList";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 
 interface ButtonProps {
   title: string;
   onPress?: () => void;
-  screen?: keyof AuthStackParamList;
+  screen?: keyof RootStackParamList;
 }
 
-type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
+type AuthNavProp = NativeStackNavigationProp<RootStackParamList>;
 
 const DefaultButton: FC<ButtonProps> = ({ title, onPress, screen }) => {
   const navigation = useNavigation<AuthNavProp>();

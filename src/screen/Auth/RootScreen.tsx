@@ -8,17 +8,18 @@ import DefaultButton from "../../components/AuthComponents/DefaultButton";
 import TextButton from "../../components/AuthComponents/TextButton";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
+import RootStackParamList from "../../navigation/Auth/RootStackParamList";
 
 const RootScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const handleSignUp = () => {
     navigation.navigate("SignUp");
   };
 
   const navigateLogin = () => {
-    navigation.navigate("Login")
-  }
+    navigation.navigate("Login");
+  };
 
   return (
     <SafeAreaView style={globalStyles.container}>
@@ -48,7 +49,8 @@ const RootScreen = () => {
         {/* signup text */}
         <View style={styles.loginTextContainer}>
           <Text style={globalStyles.lightFont}>
-            Already have an account? <TextButton title="Login" onPress={navigateLogin}/>
+            Already have an account?{" "}
+            <TextButton title="Login" onPress={navigateLogin} />
           </Text>
         </View>
       </View>

@@ -13,10 +13,11 @@ import { AuthService } from "../../network/service/auth/authService";
 
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
+import RootStackParamList from "../../navigation/Auth/RootStackParamList";
 
 const SignUpScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -49,7 +50,8 @@ const SignUpScreen = () => {
 
       navigation.navigate("Verification");
     } catch (error: any) {
-      const backendMessage = error.response?.data?.message || error.message || "Registration failed";
+      const backendMessage =
+        error.response?.data?.message || error.message || "Registration failed";
 
       Alert.alert("Register Error", backendMessage);
     } finally {

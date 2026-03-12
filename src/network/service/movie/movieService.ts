@@ -49,3 +49,16 @@ export const fetchMovieCast = async (movieId: number) => {
     throw error;
   }
 };
+
+export const searchMovies = async (query: string) => {
+  try {
+    const response = await tmdb.get("/search/movie", {
+      params: { query }
+    });
+
+    return response.data.results;
+  } catch (error) {
+    console.log("Search movie error:", error);
+    throw error;
+  }
+};

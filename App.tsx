@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "./src/screen/Profile/ProfileScreen";
 import EditProfileScreen from "./src/screen/Profile/EditProfileScreen";
-import AuthStackNavigation from "./src/navigation/Auth/AuthStackNavigation";
+import RootStackNavigation from "./src/navigation/Auth/RootStackNavigation";
 import SearchScreen from "./src/screen/Home/SearchScreen";
 
 const Stack = createNativeStackNavigator();
@@ -28,5 +28,5 @@ export default function App() {
   //   );
   // }
 
-  return <AuthStackNavigation />;
+  return <RootStackNavigation />;
 }

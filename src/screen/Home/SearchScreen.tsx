@@ -1,108 +1,80 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Image,
-  FlatList,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
-import { SafeAreaView } from 'react-native-safe-area-context';
-import ScreenHeader from '../../components/AuthComponents/ScreenHeader';
-import globalStyles from '../../components/styles/style';
-import SearchBox from '../../components/HomeComponents/SearchBox';
+import React, { useMemo, useState } from "react";
+import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import SearchBox from "../../components/HomeComponents/SearchBox";
+import MovieItem, {
+  SearchMovie,
+} from "../../components/SearchComponents/MovieItem";
+import { searchMovies } from "../../network/service/movie/movieService";
 
-// --- Types ---
-interface Movie {
-  id: string;
-  title: string;
-  rating: string;
-  genre: string;
-  year: string;
-  duration: string;
-  image: string;
-}
-
-// --- Demo Data ---
-const DEMO_MOVIES: Movie[] = [
-  {
-    id: '1',
-    title: 'Spiderman',
-    rating: '9.5',
-    genre: 'Action',
-    year: '2019',
-    duration: '139 minutes',
-    image: 'https://picsum.photos/200/300', 
-  },
-  {
-    id: '2',
-    title: 'Spider-Man: No Way Home',
-    rating: '8.5',
-    genre: 'Action',
-    year: '2021',
-    duration: '148 minutes',
-    image: 'https://picsum.photos/200/300', 
-  },
-  {
-    id: '3',
-    title: 'The Dark Knight',
-    rating: '9.0',
-    genre: 'Action',
-    year: '2008',
-    duration: '152 minutes',
-    image: 'https://picsum.photos/200/300', 
-  }
-];
+import debounce from "lodash.debounce";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import RootStackParamList from "../../navigation/Auth/RootStackParamList";
+import { Entypo, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 
 export default function SearchScreen() {
-  const [searchQuery, setSearchQuery] = useState('Spiderman');
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [movies, setMovies] = useState<SearchMovie[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // Filter the demo data based on input
-  const filteredMovies = DEMO_MOVIES.filter((movie) =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const searchMovieRequest = async (query: string) => {
+    if (!query.trim()) {
+      setMovies([]);
+      return;
+    }
 
-  // --- Sub-Components ---
+    try {
+      setLoading(true);
 
-  const MovieItem = ({ item }: { item: Movie }) => (
-    <TouchableOpacity style={styles.card} activeOpacity={0.7}>
-      <Image source={{ uri: item.image }} style={styles.poster} />
-      <View style={styles.infoContainer}>
-        <Text style={styles.movieTitle} numberOfLines={1}>{item.title}</Text>
-        
-        <View style={styles.metaContainer}>
-          <View style={styles.metaRow}>
-            <FontAwesome name="star" size={14} color="#FF8700" />
-            <Text style={[styles.metaText, { color: '#FF8700' }]}>{item.rating}</Text>
-          </View>
-          <View style={styles.metaRow}>
-            <FontAwesome name="ticket" size={14} color="#92929D" />
-            <Text style={styles.metaText}>{item.genre}</Text>
-          </View>
-          <View style={styles.metaRow}>
-            <FontAwesome name="calendar" size={14} color="#92929D" />
-            <Text style={styles.metaText}>{item.year}</Text>
-          </View>
-          <View style={styles.metaRow}>
-            <AntDesign name="clock-circle" size={14} color="#92929D" />
-            <Text style={styles.metaText}>{item.duration}</Text>
-          </View>
-        </View>
+      const results = await searchMovies(query);
+
+      const formatted: SearchMovie[] = results.map((movie: any) => ({
+        id: movie.id,
+        title: movie.title,
+        rating: movie.vote_average?.toFixed(1) || "0",
+        genre: "Movie",
+        year: movie.release_date?.split("-")[0] || "N/A",
+        image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+      }));
+
+      setMovies(formatted);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const debouncedSearch = useMemo(() => debounce(searchMovieRequest, 500), []);
+
+  const handleSearch = (text: string) => {
+    setSearchQuery(text);
+    debouncedSearch(text);
+  };
+
+  const EmptySearch = () => (
+    <View style={styles.emptyContainer}>
+      <View style={styles.iconBadge}>
+        <Entypo name="emoji-happy" size={26} color="#0d0d11" />
       </View>
-    </TouchableOpacity>
+
+      <Text style={styles.emptyTitle}>
+        Find your movie by title,{"\n"}categories, years, etc
+      </Text>
+    </View>
   );
 
   const NoResultsView = () => (
     <View style={styles.emptyContainer}>
-      <Image 
-        source={{ uri: 'https://i.ibb.co/vY8m0yM/no-results-icon.png' }} 
-        style={styles.emptyImage}
-        resizeMode="contain"
-      />
-      <Text style={styles.emptyTitle}>We Are Sorry, We Can{"\n"}Not Find The Movie :(</Text>
+      <View style={styles.iconBadge}>
+        <FontAwesome5 name="sad-tear" size={26} color="#0d0d11" />
+      </View>
+
+      <Text style={styles.emptyTitle}>
+        We Are Sorry, We Can{"\n"}Not Find The Movie :(
+      </Text>
       <Text style={styles.emptySubtitle}>
         Find your movie by Type title,{"\n"}categories, years, etc
       </Text>
@@ -110,22 +82,38 @@ export default function SearchScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={["top"]} style={styles.container}>
       <Text style={styles.title}>Search</Text>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
-        <SearchBox placeholder="Search"/>
+        <SearchBox
+          placeholder="Search"
+          value={searchQuery}
+          onChangeText={handleSearch}
+        />
       </View>
 
       {/* Conditional Content */}
-      {filteredMovies.length > 0 ? (
+      {movies.length > 0 ? (
         <FlatList
-          data={filteredMovies}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <MovieItem item={item} />}
+          showsVerticalScrollIndicator = {false}
+          data={movies}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <MovieItem
+              movie={item}
+              onPress={() =>
+                navigation.navigate("Detail", {
+                  movieId: item.id,
+                })
+              }
+            />
+          )}
           contentContainerStyle={styles.listContent}
         />
+      ) : searchQuery.length === 0 ? (
+        <EmptySearch />
       ) : (
         <NoResultsView />
       )}
@@ -134,11 +122,11 @@ export default function SearchScreen() {
 }
 
 const styles = StyleSheet.create({
-  container:{
-      flex:1,
-      padding: 15,
-      paddingBottom: 0,
-      backgroundColor: '#1f1d2b',
+  container: {
+    flex: 1,
+    padding: 15,
+    paddingBottom: 0,
+    backgroundColor: "#1f1d2b",
   },
   title: {
     color: "#ffffff",
@@ -149,34 +137,33 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     marginVertical: 15,
-    position: 'relative',
+    position: "relative",
   },
   searchInput: {
-    backgroundColor: '#3A3F47',
+    backgroundColor: "#3A3F47",
     borderRadius: 16,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 14,
   },
   searchIcon: {
-    position: 'absolute',
+    position: "absolute",
     right: 20,
     top: 13,
   },
   listContent: {
-
     paddingTop: 10,
   },
   card: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 24,
   },
   poster: {
     width: 95,
     height: 120,
     borderRadius: 16,
-    backgroundColor: '#3A3F47',
+    backgroundColor: "#3A3F47",
   },
   infoContainer: {
     marginLeft: 15,
@@ -184,46 +171,40 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
   },
   movieTitle: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: '400',
-  },
-  metaContainer:{
-    marginTop: 15
-  },
-  metaRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  metaText: {
-    color: '#92929D',
-    fontSize: 13,
-    marginLeft: 10,
+    fontWeight: "400",
   },
   // Empty State Styles
+  iconBadge: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: "#12cdd9",
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 5,
+    borderColor: "#d4af37",
+  },
   emptyContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingBottom: 80,
   },
-  emptyImage: {
-    width: 100,
-    height: 100,
-    marginBottom: 20,
-  },
   emptyTitle: {
-    color: '#FFFFFF',
+    marginTop: 10,
+    color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: '600',
-    textAlign: 'center',
-    lineHeight: 26,
+    fontWeight: "600",
+    textAlign: "center",
+    lineHeight: 24,
   },
   emptySubtitle: {
-    color: '#92929D',
+    color: "#92929D",
     fontSize: 13,
-    textAlign: 'center',
-    marginTop: 10,
+    textAlign: "center",
+    marginTop: 5,
     lineHeight: 20,
   },
 });

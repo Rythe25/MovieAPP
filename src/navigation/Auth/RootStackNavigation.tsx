@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AuthStackParamList from "./AuthStackParamList";
+import RootStackParamList from "./RootStackParamList";
 import { createStaticNavigation } from "@react-navigation/native";
 import LoginScreen from "../../screen/Auth/LoginScreen";
 import SignUpScreen from "../../screen/Auth/SignUpScreen";
@@ -13,24 +13,23 @@ import EditProfileScreen from "../../screen/Profile/EditProfileScreen";
 import ProfileScreen from "../../screen/Profile/ProfileScreen";
 import DetailScreen from "../../screen/Home/DetailScreen";
 
-const RootStack = createNativeStackNavigator<AuthStackParamList>({
-  screenOptions: { 
-    headerShown: false, 
-    animation: 'none',
+const RootStack = createNativeStackNavigator<RootStackParamList>({
+  screenOptions: {
+    headerShown: false,
+    animation: "none",
     contentStyle: {
-      backgroundColor : '#171725'
-    }
-    
+      backgroundColor: "#171725",
+    },
   },
   screens: {
     Root: RootScreen,
-    SignUp: SignUpScreen, 
+    SignUp: SignUpScreen,
     Login: LoginScreen,
     CreateNewPassword : CreateNewPasswordScreen,
     PasswordReset : PasswordResetScreen,
     Verification : VerificationScreen,
     // PasswordVerification : PasswordVerificationScreen,
-    HomeStack : BottomNavigation,
+    HomeStack: BottomNavigation,
     Profile: ProfileScreen,
     EditProfile: EditProfileScreen,
     Detail: DetailScreen,
@@ -39,9 +38,9 @@ const RootStack = createNativeStackNavigator<AuthStackParamList>({
 
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends AuthStackParamList {}
+    interface RootParamList extends RootStackParamList {}
   }
 }
 
-const AuthStackNavigation = createStaticNavigation(RootStack);
-export default AuthStackNavigation;
+const RootStackNavigation = createStaticNavigation(RootStack);
+export default RootStackNavigation;

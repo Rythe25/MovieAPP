@@ -19,12 +19,13 @@ import PopupModal from "../../components/ProfileComponents/PopupModal";
 
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
+import RootStackParamList from "../../navigation/Auth/RootStackParamList";
 
 import { AuthService } from "../../network/service/auth/authService";
 
 const ProfileScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [loading, setLoading] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -83,33 +84,34 @@ const ProfileScreen = () => {
             <Text style={styles.email}>tiffany@gmail.com</Text>
           </View>
 
-          <TouchableOpacity style={styles.editButton}
-            onPress={() => navigation.navigate("EditProfile")} >
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => navigation.navigate("EditProfile")}
+          >
             <FontAwesome name="edit" size={25} color="#12cdd9" />
           </TouchableOpacity>
         </View>
 
         {/* Gold Plan */}
-          <LinearGradient
-            colors={["#F57C00", "#FF9F2E", "#FFA53A"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0.7 }}
-            style={styles.planCard}
-          >
-            <View style={styles.planRow}>
-              <View style={[styles.planBadge, styles.planGoldBadge]}>
-                <FontAwesome name="star" size={16} color="#ffff" />
-              </View>
-
-              <View style={styles.planInfo}>
-                <Text style={styles.planTitle}>Premium Member</Text>
-                <Text style={styles.planDescription}>
-                  New Movies are coming for you,{"\n"}Download Now!
-                </Text>
-              </View>
+        <LinearGradient
+          colors={["#F57C00", "#FF9F2E", "#FFA53A"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0.7 }}
+          style={styles.planCard}
+        >
+          <View style={styles.planRow}>
+            <View style={[styles.planBadge, styles.planGoldBadge]}>
+              <FontAwesome name="star" size={16} color="#ffff" />
             </View>
 
-          </LinearGradient>
+            <View style={styles.planInfo}>
+              <Text style={styles.planTitle}>Premium Member</Text>
+              <Text style={styles.planDescription}>
+                New Movies are coming for you,{"\n"}Download Now!
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
 
         {/* Account */}
         <View style={styles.accountCard}>
@@ -140,10 +142,18 @@ const ProfileScreen = () => {
         {/* More */}
         <View style={styles.accountCard}>
           <Text style={styles.sectionTitle}>More</Text>
-          <CardItem icon="file-text" label="Legal and Policy" onPress={() => {}}/>
+          <CardItem
+            icon="file-text"
+            label="Legal and Policy"
+            onPress={() => {}}
+          />
           <View style={styles.accountDivider} />
 
-          <CardItem icon="life-ring" label="Help and Feedback" onPress={() => {}}/>
+          <CardItem
+            icon="life-ring"
+            label="Help and Feedback"
+            onPress={() => {}}
+          />
           <View style={styles.accountDivider} />
 
           <CardItem icon="info-circle" label="About Us" onPress={() => {}} />
@@ -215,7 +225,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     marginHorizontal: 20,
-    marginVertical: 10
+    marginVertical: 10,
   },
   planCard: {
     borderRadius: 16,
@@ -274,7 +284,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20
+    marginBottom: 20,
   },
   textStyle: {
     color: "#12cdd9",

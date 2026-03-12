@@ -13,21 +13,19 @@ import { AuthService } from "../../network/service/auth/authService";
 
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
+import RootStackParamList from "../../navigation/Auth/RootStackParamList";
 
 const VerificationScreen = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
-
-  const [code,setCode] = useState("");
-  const [loading,setLoading] = useState(false);
+  const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleVerify = async () => {
-
-    try{
-
-      if(code.length !== 6){
-        Alert.alert("Invalid Code","Please enter the 6 digit code");
+    try {
+      if (code.length !== 6) {
+        Alert.alert("Invalid Code", "Please enter the 6 digit code");
         return;
       }
 
@@ -38,42 +36,33 @@ const VerificationScreen = () => {
       // optional: remove register token
       await AsyncStorage.removeItem("token");
 
-      Alert.alert("Success","Account verified successfully");
+      Alert.alert("Success", "Account verified successfully");
 
       navigation.reset({
-        index:0,
-        routes:[{name:"Login"}]
+        index: 0,
+        routes: [{ name: "Login" }],
       });
-
-    }catch(error:any){
-
+    } catch (error: any) {
       const backendMessage =
-        error.response?.data?.message ||
-        error.message ||
-        "Verification failed";
+        error.response?.data?.message || error.message || "Verification failed";
 
-      Alert.alert("Verification Error",backendMessage);
-
-    }finally{
+      Alert.alert("Verification Error", backendMessage);
+    } finally {
       setLoading(false);
     }
-
   };
 
   const handleResend = async () => {
-
-    try{
+    try {
       await AuthService.sendCode();
-      Alert.alert("Code Sent","A new verification code was sent");
-    }catch(error:any){
-      Alert.alert("Error","Unable to resend code");
+      Alert.alert("Code Sent", "A new verification code was sent");
+    } catch (error: any) {
+      Alert.alert("Error", "Unable to resend code");
     }
-
   };
 
   return (
     <SafeAreaView style={globalStyles.container}>
-
       <ScreenHeader title="" />
 
       <View style={styles.sectionTopContainer}>
@@ -84,18 +73,15 @@ const VerificationScreen = () => {
       </View>
 
       <View style={styles.sectionMidContainer}>
-
         <TextInputBox
           label="Verification Code"
           placeholder="123456"
           value={code}
           onChangeText={setCode}
         />
-
       </View>
 
       <View style={styles.sectionBottomContainer}>
-
         <DefaultButton
           title={loading ? "Verifying..." : "Continue"}
           onPress={handleVerify}
@@ -104,12 +90,10 @@ const VerificationScreen = () => {
         <View style={styles.resendContainer}>
           <Text style={globalStyles.lightFont}>
             Didn't receive code?{" "}
-            <TextButton title="Resend" onPress={handleResend}/>
+            <TextButton title="Resend" onPress={handleResend} />
           </Text>
         </View>
-
       </View>
-
     </SafeAreaView>
   );
 };

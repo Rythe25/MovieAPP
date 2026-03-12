@@ -73,7 +73,10 @@ const DetailScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScreenHeader title="Detail" />
+      <View style={styles.headerContainer}>
+        <ScreenHeader title="Detail" />
+      </View>
+
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Banner */}
@@ -203,6 +206,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1f1d2b",
+  },
+  headerContainer: {
+    paddingVertical: 20,
+    paddingHorizontal: 10
   },
   bannerContainer: {
     position: "relative",

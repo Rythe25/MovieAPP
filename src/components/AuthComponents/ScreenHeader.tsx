@@ -1,31 +1,37 @@
 import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import AuthStackParamList from "../../navigation/Auth/AuthStackParamList";
+import RootStackParamList from "../../navigation/Auth/RootStackParamList";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface ScreenHeaderProps {
   title: string | null;
+  background?: string;
 }
 
-type AuthNavProp = NativeStackNavigationProp<AuthStackParamList>;
+type AuthNavProp = NativeStackNavigationProp<RootStackParamList>;
 
-const ScreenHeader: FC<ScreenHeaderProps> = ({ title }) => {
+const ScreenHeader: FC<ScreenHeaderProps> = ({ title, background }) => {
   const navigation = useNavigation<AuthNavProp>();
 
   return (
     <View style={styles.headerContainer}>
-      <View style={styles.backButtonContainer}>
+      <View
+        style={[
+          styles.backButtonContainer,
+          background && styles.backButtonBackground
+        ]}
+      >
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="chevron-back-sharp" size={30} color="white" />
         </TouchableOpacity>
       </View>
+
       <Text style={styles.headerTitle}>{title}</Text>
     </View>
   );
 };
-
 export default ScreenHeader;
 
 const styles = StyleSheet.create({
@@ -45,6 +51,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 50,
+  },
+  backButtonBackground: {
     backgroundColor: "#2a2c39",
   },
   headerTitle: {
