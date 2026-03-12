@@ -8,6 +8,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 interface ScreenHeaderProps {
   title: string | null;
   background?: string;
+  showBackButton?: boolean;
 }
 
 type AuthNavProp = NativeStackNavigationProp<RootStackParamList>;
@@ -15,23 +16,29 @@ type AuthNavProp = NativeStackNavigationProp<RootStackParamList>;
 const ScreenHeader: FC<ScreenHeaderProps> = ({ title, background }) => {
   const navigation = useNavigation<AuthNavProp>();
 
+  const showBackButton = navigation.canGoBack();
+
   return (
     <View style={styles.headerContainer}>
-      <View
-        style={[
-          styles.backButtonContainer,
-          background && styles.backButtonBackground
-        ]}
-      >
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back-sharp" size={30} color="white" />
-        </TouchableOpacity>
-      </View>
+
+      {showBackButton && (
+        <View
+          style={[
+            styles.backButtonContainer,
+            background && styles.backButtonBackground
+          ]}
+        >
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="chevron-back-sharp" size={30} color="white" />
+          </TouchableOpacity>
+        </View>
+      )}
 
       <Text style={styles.headerTitle}>{title}</Text>
     </View>
   );
 };
+
 export default ScreenHeader;
 
 const styles = StyleSheet.create({

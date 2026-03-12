@@ -48,7 +48,12 @@ const SignUpScreen = () => {
       await AsyncStorage.setItem("token", token);
       await AuthService.sendCode();
 
-      navigation.navigate("Verification");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Verification" }],
+      });
+
+      // navigation.navigate("Verification");
     } catch (error: any) {
       const backendMessage =
         error.response?.data?.message || error.message || "Registration failed";

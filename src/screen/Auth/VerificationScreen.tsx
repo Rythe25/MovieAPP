@@ -38,10 +38,7 @@ const VerificationScreen = () => {
 
       Alert.alert("Success", "Account verified successfully");
 
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Login" }],
-      });
+      navigation.replace("Login");
     } catch (error: any) {
       const backendMessage =
         error.response?.data?.message || error.message || "Verification failed";
@@ -63,7 +60,6 @@ const VerificationScreen = () => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <ScreenHeader title="" />
 
       <View style={styles.sectionTopContainer}>
         <Text style={globalStyles.title}>Verifying Your Account</Text>
