@@ -90,6 +90,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   topSection: {
     // borderColor: 'white', borderWidth: 1,
+    paddingHorizontal: 15,
     gap: 20,
   },
   midSection: {

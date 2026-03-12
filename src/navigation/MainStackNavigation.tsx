@@ -11,6 +11,7 @@ const BottomNavigation = createBottomTabNavigator({
   screenOptions: {
     headerShown: false,
     tabBarActiveTintColor: "#0296e5",
+    animation: 'none',
     tabBarStyle: {
       height: 100,
       paddingTop: 20,
@@ -28,14 +29,14 @@ const BottomNavigation = createBottomTabNavigator({
         },
       },
     },
-    // Search: {
-    //   screen: SearchScreen,
-    //   options: {
-    //     tabBarIcon: ({ color, size }) => {
-    //       return <FontAwesome name="search" size={size} color={color} />;
-    //     },
-    //   },
-    // },
+    Search: {
+      screen: SearchScreen,
+      options: {
+        tabBarIcon: ({ color, size }) => {
+          return <FontAwesome name="search" size={size} color={color} />;
+        },
+      },
+    },
     Profile: {
       screen: ProfileScreen,
       options: {

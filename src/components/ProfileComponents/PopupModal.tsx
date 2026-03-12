@@ -46,18 +46,18 @@ const PopupModal = ({
           <View style={styles.actions}>
             <TextButton
               variant="block"
-              title={cancelText}
-              onPress={loading ? undefined : onCancel}
-              containerStyle={[styles.buttonBase, styles.cancelButton, loading && styles.disabled]}
-              textStyle={styles.cancelText}
-            />
-
-            <TextButton
-              variant="block"
               title={loading ? "Logging Out..." : confirmText}
               onPress={loading ? undefined : onConfirm}
               containerStyle={[styles.buttonBase, styles.confirmButton, loading && styles.disabled]}
               textStyle={styles.confirmText}
+            />
+
+            <TextButton
+              variant="block"
+              title={cancelText}
+              onPress={loading ? undefined : onCancel}
+              containerStyle={[styles.buttonBase, styles.cancelButton, loading && styles.disabled]}
+              textStyle={styles.cancelText}
             />
           </View>
         </View>
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#12cdd9",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 4,
-    borderColor: "#1f1d2b",
+    borderWidth: 5,
+    borderColor: "#d4af37",
   },
   title: {
     color: "#ffffff",

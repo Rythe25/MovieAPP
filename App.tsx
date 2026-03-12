@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProfileScreen from "./src/screen/Profile/ProfileScreen";
 import EditProfileScreen from "./src/screen/Profile/EditProfileScreen";
 import AuthStackNavigation from "./src/navigation/Auth/AuthStackNavigation";
+import SearchScreen from "./src/screen/Home/SearchScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,16 +17,16 @@ export default function App() {
     SystemUI.setBackgroundColorAsync("#171725");
   }, []);
 
-  if (PROFILE_ONLY) {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Profile" component={ProfileScreen} />
-          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
+  // if (PROFILE_ONLY) {
+  //   return (
+  //     <NavigationContainer>
+  //       <Stack.Navigator screenOptions={{ headerShown: false }}>
+  //         <Stack.Screen name="Profile" component={ProfileScreen} />
+  //         <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+  //       </Stack.Navigator>
+  //     </NavigationContainer>
+  //   );
+  // }
 
   return <AuthStackNavigation />;
 }
