@@ -11,9 +11,9 @@ import debounce from "lodash.debounce";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import RootStackParamList from "../../navigation/Auth/RootStackParamList";
-import { Entypo, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 
-export default function SearchScreen() {
+const SearchScreen = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState<SearchMovie[]>([]);
@@ -121,6 +121,8 @@ export default function SearchScreen() {
   );
 }
 
+export default SearchScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -175,6 +177,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "400",
   },
+  
   // Empty State Styles
   iconBadge: {
     width: 70,

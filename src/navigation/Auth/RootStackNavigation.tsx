@@ -4,7 +4,6 @@ import { createStaticNavigation } from "@react-navigation/native";
 import LoginScreen from "../../screen/Auth/LoginScreen";
 import SignUpScreen from "../../screen/Auth/SignUpScreen";
 import RootScreen from "../../screen/Auth/RootScreen";
-import CreateNewPasswordScreen from "../../screen/Auth/CreateNewPasswordScreen";
 import PasswordResetScreen from "../../screen/Auth/PasswordResetScreen";
 import VerificationScreen from "../../screen/Auth/VerificationScreen";
 import BottomNavigation from "../MainStackNavigation";

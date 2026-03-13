@@ -8,13 +8,14 @@ import TrendingCard from "../../components/HomeComponents/TrendingCard";
 import { ActivityIndicator } from "react-native";
 
 import MovieCard, { Movie } from "../../components/HomeComponents/MovieCard";
-import { fetchMovies, fetchTrendingMovies } from "../../network/service/movie/movieService";
+import {
+  fetchMovies,
+  fetchTrendingMovies,
+} from "../../network/service/movie/movieService";
 import TabHeader from "../../components/HomeComponents/TabHeader";
 
-export default function HomeScreen() {
-  // Trending Movies
+const HomeScreen = () => {
   const [trending, setTrending] = useState<Movie[]>([]);
-
   useEffect(() => {
     loadTrendingMovies();
   }, []);
@@ -28,9 +29,9 @@ export default function HomeScreen() {
     }
   };
 
-  // Movies Selection
   const categories = ["now_playing", "upcoming", "top_rated", "popular"];
   const categoryLabels = ["Now Playing", "Upcoming", "Top Rated", "Popular"];
+
   const [activeTab, setActiveTab] = useState(0);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(1);
@@ -50,11 +51,10 @@ export default function HomeScreen() {
       if (pageNumber === 1) {
         setMovies(data);
       } else {
-        setMovies(prev => [...prev, ...data]);
+        setMovies((prev) => [...prev, ...data]);
       }
 
       setPage(pageNumber);
-
     } catch (err) {
       console.log(err);
     }
@@ -73,83 +73,81 @@ export default function HomeScreen() {
         setMovies((prev) => [...prev, ...data]);
         setPage(nextPage);
       }
-
     } catch (err) {
       console.log(err);
     } finally {
       setLoadingMore(false);
     }
   };
-  
-return (
-  <SafeAreaView style={globalStyles.homeContainer} edges={["top"]}>
-    <FlatList
-      ref={listRef}
-      data={movies}
-      numColumns={3}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => <MovieCard movie={item} />}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 40 }}
 
-      ListHeaderComponent={
-        <>
-          <View style={styles.topSection}>
-            <Text style={globalStyles.homeTitle}>
-              What do you want to watch?
-            </Text>
+  return (
+    <SafeAreaView style={globalStyles.homeContainer} edges={["top"]}>
+      <FlatList
+        ref={listRef}
+        data={movies}
+        numColumns={3}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <MovieCard movie={item} />}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 40 }}
+        ListHeaderComponent={
+          <>
+            <View style={styles.topSection}>
+              <Text style={globalStyles.homeTitle}>
+                What do you want to watch?
+              </Text>
 
-            <SearchBox placeholder="Search" />
-          </View>
+              <SearchBox placeholder="Search" />
+            </View>
 
-          <View style={styles.midSection}>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={{ height: 290 }}
-            >
-              {trending.map((movie, index) => (
-                <TrendingCard
-                  key={movie.id}
-                  id={movie.id}
-                  number={index + 1}
-                  poster={movie.poster_path}
-                />
-              ))}
-            </ScrollView>
-          </View>
+            <View style={styles.midSection}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={{ height: 290 }}
+              >
+                {trending.map((movie, index) => (
+                  <TrendingCard
+                    key={movie.id}
+                    id={movie.id}
+                    number={index + 1}
+                    poster={movie.poster_path}
+                  />
+                ))}
+              </ScrollView>
+            </View>
 
-          <View style={styles.bottomSection}>
-            <TabHeader
-              title={categoryLabels}
-              onTabChange={(index) => {
-                setActiveTab(index);
-                listRef.current?.scrollToOffset({
-                  offset: 0,
-                  animated: false,
-                });
-              }}
+            <View style={styles.bottomSection}>
+              <TabHeader
+                title={categoryLabels}
+                onTabChange={(index) => {
+                  setActiveTab(index);
+                  listRef.current?.scrollToOffset({
+                    offset: 0,
+                    animated: false,
+                  });
+                }}
+              />
+            </View>
+          </>
+        }
+        onEndReached={loadMoreMovies}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          loadingMore ? (
+            <ActivityIndicator
+              size="large"
+              color="#0296e5"
+              style={{ marginVertical: 20 }}
             />
-          </View>
-        </>
-      }
+          ) : null
+        }
+      />
+    </SafeAreaView>
+  );
+};
 
-      onEndReached={loadMoreMovies}
-      onEndReachedThreshold={0.5}
-
-      ListFooterComponent={
-        loadingMore ? (
-          <ActivityIndicator
-            size="large"
-            color="#0296e5"
-            style={{ marginVertical: 20 }}
-          />
-        ) : null
-      }
-    />
-  </SafeAreaView>
-);
-}
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   topSection: {
@@ -160,11 +158,11 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   bottomSection: {
-    marginBottom: 10
+    marginBottom: 10,
   },
   loadingText: {
     textAlign: "center",
     paddingVertical: 20,
     color: "#aaa",
-  }
+  },
 });

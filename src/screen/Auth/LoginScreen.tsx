@@ -125,18 +125,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
   sectionMidContainer: {
     flex: 0.3,
     justifyContent: "center",
     alignItems: "center",
     gap: 30,
   },
-
   sectionBottomContainer: {
     gap: 40,
   },
-
   forgotPasswordContainer: {
     marginTop: 20,
     flexDirection: "row-reverse",

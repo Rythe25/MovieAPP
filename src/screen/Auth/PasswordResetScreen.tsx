@@ -135,14 +135,10 @@ export default PasswordResetScreen;
 
 const styles = StyleSheet.create({
   sectionTopContainer: {
-    // borderWidth:1, borderColor:'white',
-    // flex: 0.2,
     justifyContent: "center",
     alignItems: "center",
   },
   inputBoxContainer: {
-    // borderWidth:1, borderColor:'white',
-    // flex: 0.2,
     marginTop: 30,
     gap: 30,
     flexDirection: "column",
@@ -150,7 +146,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   sendCodeContainer: {
-    // borderWidth:1, borderColor:'white',
     alignItems: "flex-end",
     marginTop: 10,
     marginHorizontal: 20,

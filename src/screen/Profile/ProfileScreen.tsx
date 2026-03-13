@@ -27,8 +27,7 @@ import { AuthService } from "../../network/service/auth/authService";
 import { User } from "../../network/api/type/authType";
 
 const ProfileScreen = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [loading, setLoading] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);

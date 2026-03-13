@@ -44,16 +44,16 @@ const SignUpScreen = () => {
         password_confirmation: confirmPassword,
       });
 
-      const token = data.token;
-      await AsyncStorage.setItem("token", token);
+      await AsyncStorage.multiSet([
+        ["token", data.token],
+        ["user", JSON.stringify(data.user)]
+      ]);
       await AuthService.sendCode();
 
       navigation.reset({
         index: 0,
         routes: [{ name: "Verification" }],
       });
-
-      // navigation.navigate("Verification");
     } catch (error: any) {
       const backendMessage =
         error.response?.data?.message || error.message || "Registration failed";
@@ -125,13 +125,11 @@ export default SignUpScreen;
 
 const styles = StyleSheet.create({
   sectionTopContainer: {
-    // borderWidth:1, borderColor:'white',
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 30,
   },
   sectionMidContainer: {
-    // borderWidth:1, borderColor:'white',
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
@@ -139,7 +137,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   sectionBottomContainer: {
-    // borderWidth:1,
     flex: 1,
     borderColor: "white",
     gap: 40,

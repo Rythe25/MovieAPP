@@ -146,8 +146,6 @@ const styles = StyleSheet.create({
     color: "#868692",
   },
   signUpWithLogoContainer: {
-    // borderWidth: 1,
-    // borderColor: 'white',
     margin: 10,
     marginTop: 10,
     paddingTop: 15,

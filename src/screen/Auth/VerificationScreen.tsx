@@ -21,6 +21,7 @@ const VerificationScreen = () => {
 
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [reSendCodeLoading, setReSendCodeLoading] = useState(false);
 
   const handleVerify = async () => {
     try {
@@ -33,7 +34,6 @@ const VerificationScreen = () => {
 
       await AuthService.verifyCode(code);
 
-      // optional: remove register token
       await AsyncStorage.removeItem("token");
 
       Alert.alert("Success", "Account verified successfully");
@@ -51,10 +51,13 @@ const VerificationScreen = () => {
 
   const handleResend = async () => {
     try {
+      setReSendCodeLoading(true);
       await AuthService.sendCode();
       Alert.alert("Code Sent", "A new verification code was sent");
     } catch (error: any) {
       Alert.alert("Error", "Unable to resend code");
+    } finally {
+      setReSendCodeLoading(false);
     }
   };
 
@@ -86,7 +89,7 @@ const VerificationScreen = () => {
         <View style={styles.resendContainer}>
           <Text style={globalStyles.lightFont}>
             Didn't receive code?{" "}
-            <TextButton title="Resend" onPress={handleResend} />
+            <TextButton title={reSendCodeLoading ? "Processing..." : "Resend"} onPress={handleResend} />
           </Text>
         </View>
       </View>
@@ -98,15 +101,11 @@ export default VerificationScreen;
 
 const styles = StyleSheet.create({
   sectionTopContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
     flex: 0.3,
     justifyContent: "center",
     alignItems: "center",
   },
   sectionMidContainer: {
-    // borderWidth:1,
-    // borderColor:'white',
     flex: 0.15,
     flexDirection: "row",
     justifyContent: "center",
@@ -114,8 +113,6 @@ const styles = StyleSheet.create({
     gap: 15,
   },
   inputContainer: {
-    // borderWidth:1,
-    // borderColor:'#12cdd9',
     backgroundColor: "#252836",
     flex: 1,
     borderRadius: 10,
@@ -124,8 +121,6 @@ const styles = StyleSheet.create({
     height: 80,
   },
   textInput: {
-    // borderWidth:1,
-    // borderColor:'white',
     justifyContent: "center",
     textAlign: "center",
     fontSize: 32,
@@ -133,8 +128,6 @@ const styles = StyleSheet.create({
     color: "white",
   },
   sectionBottomContainer: {
-    // flex:1,
-    // borderWidth:1,
     paddingTop: 50,
     borderColor: "white",
     gap: 30,
