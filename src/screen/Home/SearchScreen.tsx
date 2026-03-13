@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import React, { useMemo, useState, useEffect } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SearchBox from "../../components/HomeComponents/SearchBox";
 import MovieItem, {
@@ -8,6 +8,7 @@ import MovieItem, {
 import { searchMovies } from "../../network/service/movie/movieService";
 
 import debounce from "lodash.debounce";
+import { ActivityIndicator } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import RootStackParamList from "../../navigation/Auth/RootStackParamList";
@@ -49,10 +50,23 @@ const SearchScreen = () => {
 
   const debouncedSearch = useMemo(() => debounce(searchMovieRequest, 500), []);
 
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, []);
+
   const handleSearch = (text: string) => {
     setSearchQuery(text);
     debouncedSearch(text);
   };
+
+  const LoadingView = () => (
+    <View style={styles.loadingContainer}>
+      <ActivityIndicator size="large" color="#12cdd9" />
+      <Text style={styles.loadingText}>Searching movies...</Text>
+    </View>
+  );
 
   const EmptySearch = () => (
     <View style={styles.emptyContainer}>
@@ -95,7 +109,9 @@ const SearchScreen = () => {
       </View>
 
       {/* Conditional Content */}
-      {movies.length > 0 ? (
+        {loading ? (
+          <LoadingView />
+        ) : movies.length > 0 ? (
         <FlatList
           showsVerticalScrollIndicator = {false}
           data={movies}
@@ -177,8 +193,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "400",
   },
-  
-  // Empty State Styles
+  // Loading
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 80,
+  },
+  loadingText: {
+    marginTop: 10,
+    color: "#FFFFFF",
+    fontSize: 14,
+  },
+  // Empty State
   iconBadge: {
     width: 70,
     height: 70,
