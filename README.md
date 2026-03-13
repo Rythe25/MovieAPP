@@ -68,7 +68,7 @@ Follow the steps below to set up the project locally.
 ## 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/movie-app.git
+git clone https://github.com/your-username/MovieAPP.git
 ```
 
 ---
