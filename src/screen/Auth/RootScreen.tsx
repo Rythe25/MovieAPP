@@ -11,8 +11,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import RootStackParamList from "../../navigation/Auth/RootStackParamList";
 
 const RootScreen = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  
   const handleSignUp = () => {
     navigation.navigate("SignUp");
   };
@@ -83,8 +83,6 @@ const RootScreen = () => {
 const styles = StyleSheet.create({
   // Top Section
   sectionTopContainer: {
-    // borderWidth: 1,
-    // borderColor: 'white',
     flex: 1.3,
   },
   headerContainer: {
@@ -94,8 +92,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   logoContainer: {
-    // borderWidth: 1,
-    // borderColor: 'white',
     alignItems: "center",
   },
   logoText: {
@@ -117,8 +113,6 @@ const styles = StyleSheet.create({
 
   // Mid Section
   sectionMidContainer: {
-    // borderWidth: 1,
-    // borderColor: 'white',
     flex: 0.5,
   },
   loginTextContainer: {
@@ -129,14 +123,10 @@ const styles = StyleSheet.create({
 
   // Bottom Section
   sectionBottomContainer: {
-    // borderWidth: 1,
-    // borderColor: 'white',
     flex: 1,
     alignItems: "center",
   },
   signUpWithTextContainer: {
-    // borderWidth: 1,
-    // borderColor: 'white',
     margin: 10,
     marginBottom: 0,
     flex: 0.2,

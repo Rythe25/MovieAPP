@@ -115,10 +115,13 @@ const EditProfileScreen = () => {
           onChangeText={setEmail}
         />
 
-        <DefaultButton
-          title={loading ? "Saving..." : "Save Changes"}
-          onPress={handleSave}
-        />
+        <View style={styles.buttonContainer}>
+          <DefaultButton
+            title={loading ? "Saving..." : "Save Changes"}
+            onPress={handleSave}
+          />
+        </View>
+
       </View>
     </SafeAreaView>
   );
@@ -163,7 +166,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   form: {
+    flex: 1,
     alignItems: "center",
     gap: 30,
+  },
+  buttonContainer: {
+    width: '100%',
+    alignItems: "stretch",
   },
 });
