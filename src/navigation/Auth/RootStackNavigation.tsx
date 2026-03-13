@@ -7,7 +7,6 @@ import RootScreen from "../../screen/Auth/RootScreen";
 import CreateNewPasswordScreen from "../../screen/Auth/CreateNewPasswordScreen";
 import PasswordResetScreen from "../../screen/Auth/PasswordResetScreen";
 import VerificationScreen from "../../screen/Auth/VerificationScreen";
-// import PasswordVerificationScreen from "../../screen/Auth/PasswordVerificationScreen";
 import BottomNavigation from "../MainStackNavigation";
 import EditProfileScreen from "../../screen/Profile/EditProfileScreen";
 import ProfileScreen from "../../screen/Profile/ProfileScreen";
@@ -25,7 +24,6 @@ const RootStack = createNativeStackNavigator<RootStackParamList>({
     Root: RootScreen,
     SignUp: SignUpScreen,
     Login: LoginScreen,
-    CreateNewPassword : CreateNewPasswordScreen,
     PasswordReset : PasswordResetScreen,
     Verification : VerificationScreen,
     HomeStack: BottomNavigation,
