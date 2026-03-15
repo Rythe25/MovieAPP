@@ -76,7 +76,7 @@ git clone https://github.com/your-username/MovieAPP.git
 ## 2️⃣ Navigate into the Project Directory
 
 ```bash
-cd movie-app
+cd MovieAPP
 ```
 
 ---
